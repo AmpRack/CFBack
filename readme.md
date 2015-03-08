@@ -1,6 +1,6 @@
 <h2>Codify_Forum</h2>
 <hr/>
-This is the entire project, with all libraries in place. First, a quick rundown of each folder;
+<p>Currently, this is only the website with NO libraries attached. Npm, Bower, Yeoman, and Grunt installations (by way of Thinkster.io) are required for use. The .jshintrc file should be moved to the parent directory (parallel to /app/), all other files belong in the /app/ folder. First, a quick rundown of each folder.</p>
 
  <b>bower_components/</b>     -   Holds all of the angular.js files, bootstrap, jquery, etc<br/>
  <b>node_modules/</b>         -   Grunt server files, VERY useful for testing<br/>
