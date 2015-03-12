@@ -1,7 +1,7 @@
 'use strict';
 
 // The Auth service handles transmitting user data to and from Firebase
-app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $firebase) {
+app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $firebase, $location) {
 	var ref = new Firebase(FIREBASE_URL);	// Access the firebase url
 	var auth = $firebaseSimpleLogin(ref);	// Access the firebase login service
 
@@ -32,22 +32,25 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 		user: {}
 	};
 
-	// Designate if we're logged in or not
+	// When we're logged in, do this stuff
 	$rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
 	  angular.copy(user, Auth.user);
 	  Auth.user.profile = $firebase(ref.child('profile').child(Auth.user.uid)).$asObject();
 
-	  console.log(Auth.user);
-	  console.log('logged in');
+	  console.log('Logged in');
 	});
 
-$rootScope.$on('$firebaseSimpleLogin:logout', function() {
-	if(Auth.user && Auth.user.profile) {
-    	Auth.user.profile.$destroy();
-  	}
-  	angular.copy({}, Auth.user);
-	console.log('logged out');
-});
+	// ..and when we log out, do this stuff
+	$rootScope.$on('$firebaseSimpleLogin:logout', function() {
+		if(Auth.user && Auth.user.profile) {
+	    	Auth.user.profile.$destroy();
+	  	}
+	  	
+	  	angular.copy({}, Auth.user);
+		console.log('Logged out, redirecting to login');
+		$location.path('/');
+		$('#nav-master').css('display','none');
+	});
 
 	return Auth;
 });

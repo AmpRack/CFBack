@@ -20,6 +20,7 @@ First, a quick rundown of each folder.</p>
  <li>+ Users can use their email address to register a new account</li>
  <li>+ Users can login with their email address and password</li>
  <li>+ Users can post a link with a title to firebase</li>
+ <li>+ The navbar can be used to logout</li>
  <li>- The scripts for commenting and posting are messed up; Data is being saved to firebase, but not showing up on screen...</li>
  <li>= Next up will be post-labels for sorting</li>
  </ul>

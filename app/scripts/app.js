@@ -28,14 +28,6 @@ var app = angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: '/views/main.html',
-        controller: 'PostsCtrl'
-      })
-      .when('/posts/:postId', {
-        templateUrl: '/views/showpost.html',
-        controller:  'PostViewCtrl'
-      })
-      .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'AuthCtrl',
         resolve: {
@@ -53,11 +45,19 @@ var app = angular
           }
         }
       })
+      .when('/main', {
+        templateUrl: '/views/main.html',
+        controller: 'PostsCtrl'
+      })
+      .when('/posts/:postId', {
+        templateUrl: '/views/showpost.html',
+        controller:  'PostViewCtrl'
+      })
       .when('/users/:userId', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl'
       })
-      .otherwise({
+      .otherwise({ // When all else fails, default to login/landing page
         redirectTo: '/'
       });
   });

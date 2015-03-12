@@ -6,6 +6,7 @@ app.controller('NavCtrl', function ($scope, $location, Post, Auth) {
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.user = Auth.user;
+  console.log($scope.logout);
 
 // This is the actual posting function!
   $scope.submitPost = function () {
