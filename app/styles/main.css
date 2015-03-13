@@ -1,5 +1,11 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
 /*====================
-   USER BASE STYLINGS 
+  BASE STYLINGS 
   ====================*/
 @font-face {
  font-family: biko;
@@ -10,102 +16,14 @@
   border-color: #6C7A89 !important;
 }
 
-/*=============================
- TUTORIAL STANDARD CSS SETTINGS
-==============================*/
-body {
-  background: #F3F3F3;
+.hidden {
+  visibility: hidden;
 }
 
-
-/* NAV BAR */
-.nav-pic {
-  margin: -2px 5px 0 0;
-  max-height: 20px;
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  border-radius: 100px;
+.wrapped-up {
+  height: 0;
 }
 
-
-/* MAIN POSTS PAGE */
-.post {
-  background: #fff;
-  padding:15px 0;
-  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.info {
-  font-weight: bolder;
-  font-size: 16px;
-}
-
-.info .url {
-  font-weight: normal;
-  color:#999;
-  font-size:13px;
-  margin-left:5px;
-}
-
-
-/* PROFILE PAGE */
-.prof-img{
-  width:100%;
-  max-width:100px;
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  border-radius: 100px;
-}
-
-.name {
-  font-weight: bolder;
-  font-size: 1.5em;
-}
-
-.nav-tabs {
-  margin-top:30px;
-}
-
-.vote {
-  height:20px;
-  cursor: pointer;
-}
-
-.auth-forms {
-  max-width:400px;
-  margin:0 auto;
-  background: #fff;
-  padding:1px 25px 25px 25px;
-  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-}
-
-.cmt-form {
-  margin-top:30px;
-}
-
-.cmt {
-  margin-top:10px;
-  padding-top:10px;
-  border-top:1px solid #ccc;
-}
-
-.cmt .author {
-  font-size:11px;
-  color:#bbb;
-}
-
-
-
-/* ===================
-   USER CUSTOM STYLES
-   =================== */
 
 /*====================
   LANDING PAGE
@@ -162,13 +80,13 @@ margin: 5px 0;
 /* Bootstrap css mods */
 
 .form-control {
-  font-family: arial;
-  padding: 0 3px;
-  font-size: 25px;
-  line-height: 30px;
-  /*background-color: #fff; default styles */
-  border: 2px solid #ccc !important;  
-  border-radius: 0 !important; 
+ 	font-family: arial;
+ 	padding: 0 3px;
+ 	font-size: 25px;
+ 	line-height: 30px;
+ 	/*background-color: #fff; default styles */
+ 	border: 2px solid #ccc !important;  
+ 	border-radius: 0 !important; 
 }
 
 .form-control::-moz-placeholder {
@@ -195,9 +113,14 @@ a:hover {
  opacity: 0.5;
 }
 
+.modal-header {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
 /*====================
-  LANDING PAGE END
-  ====================*/
+	LANDING PAGE END
+	====================*/
 
 /*=============================
  MAIN PAGE STYLINGS BEGIN
@@ -215,9 +138,13 @@ a:hover {
 }
 
 /* -NAV STYLES (MAIN.HTML)-*/
+
 .navbar {
   font-family: arial;
-  border-bottom: 4px solid #049372;
+  border-bottom: 1px solid grey;
+  -webkit-box-shadow: 0px 5px 2px 0px rgba(200, 200, 200, 0.5);
+  -moz-box-shadow:    0px 5px 2px 0px rgba(200, 200, 200, 0.5);
+  box-shadow:         0px 5px 2px 0px rgba(200, 200, 200, 0.5);
 }
 
 .navbar-nav > li > a {
@@ -259,6 +186,11 @@ a:hover {
   color: #DADFE1;
 }
 
+.navbar-nav > li > a:focus,
+.navbar-nav > li > a:hover {
+  background-color: transparent !important;
+}
+
 /* -POST BUTTON SECTIONS- */
 
 .new-post-button-section {
@@ -267,7 +199,7 @@ a:hover {
   border: 1px solid grey;
 }
 
-.post-reply-button-section {
+.post-reply-section {
   background: #F2F1EF;
   padding-top:15px;
   padding-bottom:15px;
@@ -295,7 +227,7 @@ a:hover {
 /* -MAIN POST- */
 .post-main {
   border: 1px solid grey;
-  max-height: 100px;
+  min-height: 100px;
   max-width: 100%; 
 }
 .post-main > img {
@@ -306,12 +238,25 @@ a:hover {
   position: relative;
   top: 10px;
   margin-right: 15px;
+  margin-bottom: 10px;
 }
 .post-main > h5 {
   margin-bottom: 0;
 }
+.post-main > h5 > span#post-title {
+  font-size: 120%;
+  font-weight: bold;
+}
+.post-main > h5 > span#timestamp {
+  color: #87D37C;
+}
+.post-main > h5 > span#username,
+.post-main > h5 > span#date-time,
+.post-main > h5 > span#keyword {
+  font-size: 75%;
+}
 .post-main > p {
-  margin: 0;
+  margin: 0 0 5px 0;
   text-align:left;
 }
 .post-main > ul {
@@ -326,18 +271,18 @@ a:hover {
   border: 0;
 }
 .post-main > ul > li > a {
-  color: #D2D7D3;
+	color: #D2D7D3;
 }
 .post-main > ul > li > a:hover {
-  color: #D2D7D3;
-  opacity: 0.5;
+	color: #D2D7D3;
+	opacity: 0.5;
 }
 .post-main > ul > li > a > span.badge {
-  background-color: #D2D7D3;
+	background-color: #D2D7D3;
 }
 .post-main > ul > li > a > span.badge:hover {
-  color: #95A5A6;
-  background-color: transparent;
+	color: #95A5A6;
+	background-color: transparent;
 }
 .post-main > .list-group > .list-group-item {
   margin: 15px 0;
@@ -345,11 +290,18 @@ a:hover {
   text-align: center;
 }
 
+#show-reply:hover, 
+#create-reply:hover {
+  cursor: pointer;
+}
+
 /* -MAIN POST REPLY- */
 .post-main-reply {
   background: #F2F1EF;
   border: 1px solid grey;
 }
+
+
 .post-main-reply > img {
   float: left;
   height: 40px;
@@ -364,6 +316,12 @@ a:hover {
 }
 .post-main-reply > p {
   margin-left: 55px;
+}
+
+/*-create reply-*/
+.post-reply-section > textarea.form-control {
+  resize: none;
+  margin-bottom: 15px;
 }
 
 /*=============================
@@ -440,8 +398,20 @@ a:hover {
 ==============================*/
 
 
+/*=============================
+ RESPONSIVE STYLES BEGIN
+==============================*/
+@media (max-width: 992px) {
+  .content-section {
+    margin-top: 60px;
+  }
+}
 
-
+@media (max-width: 768px) {
+  .content-section {
+    margin-top: 86px;
+  }
+}
 
 
 

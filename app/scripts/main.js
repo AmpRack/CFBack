@@ -18,17 +18,17 @@ $(document).ready(function() {
 
 	// Show & hide replies/new reply within post template
 	$('#show-reply').on('click', function() {
-		var getToReplies = $(this).parentsUntil('#post-template')
+		var getToReplies = $(this).parentsUntil('.post-template')
 			.last().siblings('.replies');
 		unhideWrapUp(getToReplies);
 	});
 	$('#create-reply').on('click', function() {
-		var getToCreateReply = $(this).parentsUntil('#post-template')
+		var getToCreateReply = $(this).parentsUntil('.post-template')
 				.last().siblings('.post-reply');
 		unhideWrapUp(getToCreateReply);
 	});
 	$('button#cancel-reply').on('click', function() {
-		var getToCreateReply = $(this).parentsUntil('#post-template').last();
+		var getToCreateReply = $(this).parentsUntil('.post-template').last();
 		unhideWrapUp(getToCreateReply);
 	});
 
