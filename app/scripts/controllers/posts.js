@@ -53,7 +53,7 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
   // Individual posts contain this info, 
   $scope.post = {
     title: '',
-    label: '',
+    keyword: '',
     content: ''
   };
   
