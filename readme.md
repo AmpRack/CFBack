@@ -8,7 +8,7 @@ First, a quick rundown of each folder.</p>
  <b>bower_components/</b>     -   Holds all of the angular.js files, bootstrap, jquery, etc<br/>
  <b>node_modules/</b>         -   Grunt server files, VERY useful for testing<br/>
  <b>test/</b>                 -   For running spec tests<br/>
- <b>app/</b>                  -   The website itself. Most of the folders here are nothing new.<br/>
+ <b>app/</b>                  -   The website itself. Most of the folders here are self explanatory.<br/>
  <b>app/views/</b>            -   The html template pages, to be injected into index.html<br/>
  <b>scripts/app.js</b>        -   The master controller, connects views to controllers<br/>
  <b>scripts/controllers</b>   -   Controllers inject data to the html, by way of ng-properties<br/>
@@ -22,8 +22,11 @@ First, a quick rundown of each folder.</p>
  <li>+ Users can login with their email address and password</li>
  <li>+ Users can post a link with a title to firebase</li>
  <li>+ The navbar can be used to logout, and is ready to link to the user profile.</li>
- <li>++ Posting is rough, but functional. </li>
- <li>= Next up will be comments, then user profiles. The profile object template already exists, I just need to link it to the page, then enable editing. </li>
+ <li>+ Posting is rough, but functional. </li>
+ <li>+ User profiles are mostly linked, and display user posts. </li>
+ <li>- The template for replies/comments is still broken. IDs need to change to classes.</li>
+ <li>= Functionally, the last big thing to add is a post queue to control how many posts display at a time, and link to the 'load more posts' button.</li>
+ <li>= There's also some work to be done on the profile controller and the user database in general, mostly reorganization.</li>
  </ul>
  
  

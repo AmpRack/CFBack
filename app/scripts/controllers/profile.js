@@ -14,4 +14,10 @@ app.controller('ProfileCtrl', function ($scope, $routeParams, Profile, Auth) {
 	Profile.getPosts(uid).then(function(posts) {
 		$scope.posts = posts;
 	});
+
+	// Use this to order posts newest to oldest
+	$scope.reverse = function(array) {
+  		var copy = [].concat(array);
+    	return copy.reverse();
+  	};
 });

@@ -17,6 +17,15 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
     get: function (postId) {
       return $firebase(ref.child('posts').child(postId)).$asObject();
     },
+    getPostsBy: function (key, value) {
+      var output = [];
+      for (var i = 0; i < posts.length; i++) {
+        if (posts[i][key] === value) {
+          output.push(posts[i]);
+        }
+      }
+      return output;
+    },
     delete: function (post) {
       return posts.$remove(post);
     },

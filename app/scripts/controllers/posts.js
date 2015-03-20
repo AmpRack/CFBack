@@ -14,27 +14,25 @@ function scrubTime(unit) {
 
 // When a post is made, get the current date/time
 function getTimeAsString() {
-	var currentTime = new Date();
-	var hrs  = currentTime.getHours();
-	var mins = scrubTime(currentTime.getMinutes());
-	var day  = scrubTime(currentTime.getDate());
-	var mon  = scrubTime(currentTime.getMonth() + 1);
-	console.log(mon);
-	var year = scrubTime(currentTime.getFullYear());
-	var ampm = '';
-	// Use hrs to find the meridian (am/pm) before scrubbing
-	if (hrs === 0) {
-		hrs = '12';
-		ampm = 'AM';
-	} else if (hrs > 12) {
-		hrs = scrubTime(hrs - 12);
-		ampm = 'PM';
-	} else {
-		hrs = scrubTime(hrs);
-		ampm = 'AM';
-	}
-
-	return (hrs + ':' + mins + ampm + ' ' + mon + '/' + day + '/' + year);
+  var currentTime = new Date();
+  var hrs  = currentTime.getHours();
+  var mins = scrubTime(currentTime.getMinutes());
+  var day  = scrubTime(currentTime.getDate());
+  var mon  = scrubTime(currentTime.getMonth() + 1);
+  var year = scrubTime(currentTime.getFullYear());
+  var ampm = '';
+  // Use hrs to find the meridian (am/pm) before scrubbing
+  if (hrs === 0) {
+    hrs = '12';
+    ampm = 'AM';
+  } else if (hrs > 12) {
+    hrs = scrubTime(hrs - 12);
+    ampm = 'PM';
+  } else {
+    hrs = scrubTime(hrs);
+    ampm = 'AM';
+  }
+  return (hrs + ':' + mins + ampm + ' ' + mon + '/' + day + '/' + year);
 }
 
 // PostsCtrl handles new posts and assignments, but not comments
