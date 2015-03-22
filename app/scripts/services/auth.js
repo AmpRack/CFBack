@@ -12,7 +12,12 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 		createProfile: function (user) {
 			var profile = {
 				username: user.username,
-				md5_hash: user.md5_hash
+				email: user.email,
+				md5_hash: user.md5_hash,
+				//Instantiate this stuff, change during 'Edit Profile' phase
+				about: 'I\'m a student at Codify Academy!',
+				avatar: 'http://www.imgur.com', 
+				link: 'http://www.codifyacademy.com'
 			};
 			var profileRef = $firebase(ref.child('profile'));
 			return profileRef.$set(user.uid, profile);

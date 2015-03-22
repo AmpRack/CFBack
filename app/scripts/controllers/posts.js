@@ -37,10 +37,10 @@ function getTimeAsString() {
 
 // PostsCtrl handles new posts and assignments, but not comments
 app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
-  $scope.posts = Post.all;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.user = Auth.user;
+  $scope.posts = Post.all;
 
   // Necessary to sort posts from newest to oldest
   $scope.reverse = function(array) {
@@ -66,10 +66,10 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
   		$scope.post.keyword = 'Misc';
   	} else {
   		$scope.post.keyword = $('#post-label option:selected').val();
-	}
+	 }
 
     Post.create($scope.post).then(function () {
-      $location.path('/');
+      $location.path('/main');
       $scope.post = {title: '', label: '', content: ''};
     });
   };

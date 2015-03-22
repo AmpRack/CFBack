@@ -1,7 +1,7 @@
 'use strict';
 
 // Transfers post information to and from firebase
-app.factory('Post', function ($firebase, FIREBASE_URL) {
+app.factory('Post', function ($firebase, FIREBASE_URL, $q) {
 	var ref = new Firebase(FIREBASE_URL);
 	var posts = $firebase(ref.child('posts')).$asArray();
 
@@ -18,14 +18,21 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       return $firebase(ref.child('posts').child(postId)).$asObject();
     },
     getPostsBy: function (key, value) {
-      var output = [];
-      for (var i = 0; i < posts.length; i++) {
-        if (posts[i][key] === value) {
-          output.push(posts[i]);
+      var defer = $q.defer();
+
+      $firebase(ref.child('posts')).$asArray().$loaded().then (function(allPosts) {
+        var output = [];
+
+      for (var i = 0; i < allPosts.length; i++) {
+        if (allPosts[i][key] === value) {
+          output.push(allPosts[i]);
         }
       }
-      return output;
+        defer.resolve(output);
+      });
+      return defer.promise;
     },
+
     delete: function (post) {
       return posts.$remove(post);
     },

@@ -1,17 +1,15 @@
 'use strict';
 
-app.controller('ProfileCtrl', function ($scope, $routeParams, Profile, Auth) {
+app.controller('ProfileCtrl', function ($scope, $routeParams, Profile, Post, Auth) {
 	var uid = $routeParams.userId;
+	console.log(uid);
 
-	$scope.profile = Profile.get(uid);
 	$scope.user = Auth.user;
+	$scope.profile = Profile.get(uid);
 
-	// BRIEFLY! Use Auth.user to grab the basic user info,
-	// then use that to grab ONLY that user's posts. Maybe compare it against
-	// post.creator, and some iteration? 
-	console.log($scope.user);
-	console.log('test');
-	Profile.getPosts(uid).then(function(posts) {
+
+	Post.getPostsBy('creatorUID', uid).then(function(posts){
+		console.log(posts);
 		$scope.posts = posts;
 	});
 
