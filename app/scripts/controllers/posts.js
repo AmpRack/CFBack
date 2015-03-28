@@ -36,7 +36,7 @@ function getTimeAsString() {
 }
 
 // PostsCtrl handles new posts and assignments, but not comments
-app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
+app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
   $scope.posts = Post.all;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
@@ -55,23 +55,25 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
     content: ''
   };
   
-  // This is the actual posting function
+  // Build the rest of post here, then send the object to the Post Service
   $scope.submitPost = function () {
   	console.log('Submitting post...');
   	$scope.post.creator = $scope.user.profile.username;
   	$scope.post.creatorUID = $scope.user.uid;
-  	$scope.post.postTime = getTimeAsString();
-  	
-  	if ($('#post-label option:selected').val() === 'Label') {
-  		$scope.post.keyword = 'Misc';
-  	} else {
-  		$scope.post.keyword = $('#post-label option:selected').val();
-	}
-
+    $scope.post.creatorAvatar = $scope.user.profile.avatar;
+    $scope.post.postTime = getTimeAsString();
+    $scope.post.keyword = 'Debug'; // Testing purposes only!
+    /*if ($('#post-label option:selected').val() === 'Label') {
+      $scope.post.keyword = 'Misc';
+    } else {
+      $scope.post.keyword = $('#post-label option:selected').val();
+    }*/
     Post.create($scope.post).then(function () {
       $location.path('/');
       $scope.post = {title: '', label: '', content: ''};
     });
+
+    Profile.incPost($scope.user.uid);
   };
 
   $scope.deletePost = function (post) {

@@ -22,7 +22,6 @@ app.controller('AuthCtrl', function ($scope, $location, Auth, user) {
 		Auth.register($scope.user).then(function(user) {
 			return Auth.login($scope.user).then(function(){ 
 				user.username = $scope.user.username;
-				user.about = 'I\'m a student at Codify Academy!';
 				return Auth.createProfile(user);
 			}).then(function(){
 				$location.path('/main');
