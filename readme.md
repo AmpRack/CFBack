@@ -1,6 +1,6 @@
 <h2>Codify_Forum</h2>
 <hr/>
-<p>To use, Npm, Bower, and Grunt must be installed (Yeoman optional). Decompress libraries.zip, then add the /app/ folder. 
+<p>Node.js, Bower, and Grunt are required. Due to folder-name length issues, the /node_modules/ folder is no longer included in libraries.zip. Please supply your own. Decompress libraries.zip, then add your /node_modules/ and the included /app/ folder. 
 
 First, a quick rundown of each folder.</p>
 
@@ -24,9 +24,10 @@ First, a quick rundown of each folder.</p>
  <li>+ The navbar can be used to logout, and is ready to link to the user profile.</li>
  <li>+ Posting is rough, but functional. </li>
  <li>+ User profiles are mostly linked, and display user posts. </li>
- <li>- The template for replies/comments is still broken. IDs need to change to classes.</li>
+ <li>- The template for replies/comments is still broken.</li>
  <li>= Functionally, the last big thing to add is a post queue to control how many posts display at a time, and link to the 'load more posts' button.</li>
  <li>= There's also some work to be done on the profile controller and the user database in general, mostly reorganization.</li>
+ <li>= The back-end libraries are reorganized, and migrating away from the boilerplate</li>
  </ul>
  
  

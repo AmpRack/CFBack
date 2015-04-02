@@ -1,33 +1,30 @@
 <script>$('#nav-master').css('display','block');</script>
 <div ng-controller="ProfileCtrl" class="container profile">
-<!-- This stuff is kinda cool, but not necessary right now 
-  <div class="row">
-    <div class="col-sm-1">
-      <img ng-src="http://www.gravatar.com/avatar/{{ profile.md5_hash }}" class="prof-img" />
-    </div> -->
 
 <!-- Copy/Paste From Front End Prototype -->
   <div class="container-fluid content-section">
     <div class="row">
       <div class="col-md-6 col-md-offset-3 background-white profile-full-screen">
-        <img src="images/user.jpg">
+        <img ng-src="{{ profile.avatar }}">
         <h1><span>{{ profile.username }}</span></h1>
-        <p>About Me text goes here. {{ profile.about }}</p>
+        <a ng-href="{{ profile.link }}">{{ profile.linkTitle }}</a>
+        <p>{{ profile.about }} {{ profile.email }}</p>
 
         <!-- Show user posts -->
         <dl class="dl-horizontal">
           <dt>Posts</dt>
-          <dd><span class="badge">0</span></dd>
+          <dd><span class="badge">{{ userPostCount }}</span></dd>
         </dl>
 
         <!-- Show user replies -->
         <dl class="dl-horizontal">
           <dt>Replies</dt>
-          <dd><span class="badge">0</span></dd>
+          <dd><span class="badge">{{ profile.replyCount }}</span></dd>
         </dl>
 
         <!--EDIT PROFILE w/ modal HTML BUTTON TRIGGER-->
-        <a href="#"data-toggle="modal" data-target="#editProfileModal">Edit Profile</a>
+        <a id="editButton" data-toggle="modal" data-target="#editProfileModal">Edit Profile</a>
+        <a href="" ng-click="logout()">Log Off</a>
 
         <!--EDIT PROFILE w/ modal HTML-->
         <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -38,26 +35,27 @@
                 <button type="button" class="close" data-dismiss="modal"><spanaria-hidden="true">×</span><spanclass="sr-only"></span></button> 
               </div>
 
-              <div class="modal-body text-center">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <!-- Add hidden div that on hover will show caption 
-                        "edit picture" -->
-                    <a href="#"><img src="images/user.jpg" style="height:100px;width:100px;border-radius:50%;"></a>
+              <form ng-submit="editProfile()">
+                <div class="modal-body text-center">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <!-- Add hidden div that on hover will show caption 
+                          "edit picture" -->
+                      <a><img ng-src="{{ profile.avatar }}" style="height:100px;width:100px;border-radius:50%;"></a>
+                    </div>
+                    <div class="col-xs-9">
+                      <input type="text" class="form-control" ng-model="profile.username" placeholder="{{ profile.username }}">
+                      <input type="text" class="form-control" ng-model="profile.link" placeholder="{{ profile.link }}">
+                      <input type="text" class="form-control" ng-model="profile.linkTitle" placeholder="{{ profile.linkTitle }}">
+                    </div>
                   </div>
-                  <div class="col-xs-9">
-                    <input type="text" class="form-control" placeholder="Username">
-                    <input type="text" class="form-control" placeholder="Name">
-                    <input type="text" class="form-control" placeholder="email">
-                  </div>
+                  <textarea class="form-control" rows="5" ng-model="profile.about" placeholder="About Me"></textarea>
                 </div>
-
-                <textarea class="form-control" rows="5" placeholder="About"></textarea>
-              </div>
-              <div class="modal-footer"> 
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary">Save</button>
-              </div>             
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>             
+              </form>
             </div>
           </div>
         </div>
@@ -66,12 +64,13 @@
     </div>
 
     <!-- FULL POST TEMPLATE (3 SECTIONS: POST,REPLIES,NEW-REPLY) -->
-    <div id="post-template" ng-repeat="(key,post) in posts">
+    <div id="post-template" ng-repeat="post in posts">
       <!-- Template for post -->
       <div class="row">
         <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <img src="images/user.jpg">
+          <img ng-src="{{ profile.avatar }}">
           <ul class="list-group">
+            <li class="list-group=item"><a onClick id="delete-post">X</a></li>
             <li class="list-group-item"><a id="create-reply"><i class="fa fa-reply"></i></a></li>
             <li class="list-group-item"><a id="show-reply"><span class="badge">2</span></a></li>
           </ul>
