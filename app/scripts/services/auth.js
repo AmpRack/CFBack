@@ -11,14 +11,9 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 		},
 		createProfile: function (user) {
 			var profile = {
-				username: user.username,					// User displayed name
-				about: 'I\'m a student at Codify Academy!',	// User bio
-				avatar: 'http://i.imgur.com/QGpIArR.jpg', 	// Default image
-				postCount: 0,								// Number of posts made
-				replyCount: 0,								// Number of replies made
-				link: 'http://www.codifyacademy.com',		// User personal link
-				linkTitle: 'Codify Academy Homepage'		// Personal link description
-			};	
+				username: user.username,
+				md5_hash: user.md5_hash
+			};
 			var profileRef = $firebase(ref.child('profile'));
 			return profileRef.$set(user.uid, profile);
 		},
@@ -34,10 +29,6 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 	    signedIn: function() {
 	      	return !!Auth.user.provider;
 	    },
-	    updateProfile: function(uid, newInfo) {
-	    	var profileRef = $firebase(ref.child('profile').child(uid));
-			return profileRef.$set(uid, newInfo);
-	    },
 		user: {}
 	};
 
@@ -45,7 +36,7 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 	$rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
 	  angular.copy(user, Auth.user);
 	  Auth.user.profile = $firebase(ref.child('profile').child(Auth.user.uid)).$asObject();
-	  console.log(user);
+
 	  console.log('Logged in');
 	});
 

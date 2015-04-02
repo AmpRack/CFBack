@@ -1,11 +1,10 @@
-<!-- Turn the nav on! -->
 <script>$('#nav-master').css('display','block');</script>
-<div ng-controller="PostsCtrl">
-  <div ng-hide="signedIn()" id="peek">
-    <!-- Placeholder for if a user tries to look at /main/ while logged out -->
-  </div>
 
-  <div ng-show="signedIn()" class="main-body-background">
+<div ng-hide="signedIn()" id="peek">
+  <!-- Placeholder for if a user tries to look at /main while logged out -->
+</div>
+
+<div ng-show="signedIn()" class="main-body-background">
   <div class="container-fluid content-section">
 
     <!-- Button link for new post -->
@@ -18,7 +17,7 @@
     <!-- New Post Modal --> 
     <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true"> 
       <div class="modal-dialog"> 
-        <form  class="modal-content" ng-submit="submitPost()" ng-show="signedIn()"> 
+        <form ng-controller="PostsCtrl" class="modal-content" ng-submit="submitPost()" ng-show="signedIn()"> 
           <div class="modal-header"> 
             <button type="button" class="close" data-dismiss="modal"><spanaria-hidden="true">×</span><spanclass="sr-only"></span></button> 
             <h4 class="modal-title" id="newPostModalLabel">New Post</h4> 
@@ -54,10 +53,10 @@
       <!-- Template for post -->
       <div class="row">
         <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <img ng-src="{{ post.creatorAvatar }}">
+          <img src="images/user.jpg">
           <ul class="list-group">
-            <li class="list-group-item"><a class="create-reply"><i class="fa fa-reply"></i></a></li>
-            <li class="list-group-item"><a class="show-reply"><span class="badge">2</span></a></li>
+            <li class="list-group-item"><a id="create-reply"><i class="fa fa-reply"></i></a></li>
+            <li class="list-group-item"><a id="show-reply"><span class="badge">2</span></a></li>
           </ul>
           <h5><span id="post-title">{{ post.title }}</span><span id="timestamp"> <span id="username">{{ post.creator }}</span> - <span id="date-time">{{ post.postTime }}</span> - <span id="keyword">{{ post.keyword }}</span></span></h5>
           <p>{{ post.content }}</p>

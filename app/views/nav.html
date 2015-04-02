@@ -6,7 +6,7 @@
       <!-- Use as icon for dropdown menu -->
       <img src="images/user.jpg" class="navbar-img">
       </button> 
-      <a class="navbar-brand" href="#/">Return to main</a> 
+      <a class="navbar-brand" href="#">Logo Goes Here</a> 
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -32,8 +32,13 @@
 
         <!-- Browser menu options -->
         <li> 
-          <a class="dropdown-toggle hidden-xs" ng-href="#/users/{{ user.uid }}" data-toggle="dropdown"><img src="images/user.jpg" class="navbar-img"></a> 
-
+          <a class="dropdown-toggle hidden-xs" data-toggle="dropdown"><img src="images/user.jpg" class="navbar-img"></a> 
+          <ul class="dropdown-menu" role="menu"> 
+            <li><a ng-click="getInfo()" ng-href="#/users/{{ user.uid }}">View Profile</a></li> 
+            <li><a href="">Edit Profile</a></li> 
+            <li class="divider"></li> 
+            <li><a ng-click="logout()">Log Off</a></li> 
+          </ul> 
         </li>
       </ul>  
     <!-- End collapse navbar lists -->
