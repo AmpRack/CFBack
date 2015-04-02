@@ -1,5 +1,5 @@
 <script>$('#nav-master').css('display','block');</script>
-<div ng-controller="ProfileCtrl" class="container profile">
+<div  class="container profile">
 
 <!-- Copy/Paste From Front End Prototype -->
   <div class="container-fluid content-section">
@@ -70,9 +70,9 @@
         <div class="col-md-6 col-md-offset-3 background-white post-main">
           <img ng-src="{{ profile.avatar }}">
           <ul class="list-group">
-            <li class="list-group=item"><a onClick id="delete-post">X</a></li>
-            <li class="list-group-item"><a id="create-reply"><i class="fa fa-reply"></i></a></li>
-            <li class="list-group-item"><a id="show-reply"><span class="badge">2</span></a></li>
+            <li class="list-group=item"><a ng-click="deletePost(post)" class="delete-post">X</a></li>
+            <li class="list-group-item"><a class="create-reply"><i class="fa fa-reply"></i></a></li>
+            <li class="list-group-item"><a class="show-reply"><span class="badge">2</span></a></li>
           </ul>
           <h5><span id="post-title">{{ post.title }}</span><span id="timestamp"> - <span id="username">{{ post.creator }}</span> - <span id="date-time">{{ post.postTime }}</span> - <span id="keyword">{{ post.keyword }}</span> -</span></h5>
           <p>{{ post.content }}</p>
