@@ -5,7 +5,7 @@
  * @ngdoc overview
  * @name angNewsApp
  * @description
- * # angNewsApp
+ * # CodifyApp
  *
  * Main module of the application.
  */
@@ -13,7 +13,7 @@
 'use strict';
 
 var app = angular
-  .module('angNewsApp', [
+  .module('CodifyApp', [
     'ngAnimate', 'ngCookies' , 'ngResource',
     'ngRoute'  , 'ngSanitize', 'ngTouch'   ,
     'ngImgur'  , 'firebase'
@@ -27,7 +27,7 @@ var app = angular
       scope: {
         placeholder: '=ngPlaceholder'
       },
-      link: function(scope, elem, attr) {
+      link: function(scope, elem) {
         scope.$watch('placeholder',function() {
           elem[0].placeholder = scope.placeholder;
         });
@@ -66,12 +66,7 @@ var app = angular
       })
       .when('/posts/:postId', {
         templateUrl: '/views/showpost.html',
-        controller:  'PostViewCtrl',
-        resolve: {
-          user: function(Auth) {
-            return Auth.resolveUser();
-          }
-        }
+        controller:  'PostViewCtrl'
       })
       .when('/users/:userId', {
         templateUrl: 'views/profile.html',
@@ -79,6 +74,11 @@ var app = angular
         resolve: {
           user: function(Auth) {
             return Auth.resolveUser();
+          },
+          userPosts: function(Auth, Profile) {
+            return Auth.resolveUser().then(function(user){
+              return Profile.userPosts(user.uid);
+            });
           }
         }
       })

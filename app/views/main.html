@@ -49,6 +49,39 @@
     </div>
     <!-- New Post Modal End -->
 
+    <!-- New Reply Modal Start -->
+    <div class="modal fade" id="newReplyModal" tabindex="-1" role="dialog" aria-labelledby="newReplyModalLabel" aria-hidden="true"> 
+      <div class="modal-dialog"> 
+
+        <form class="modal-content" ng-submit="addComment()"> 
+          <div class="modal-header"> 
+            <button type="button" class="close" data-dismiss="modal"><spanaria-hidden="true">×</span><spanclass="sr-only"></span></button> 
+            <h4 class="modal-title" id="newReplyModalLabel">Comment on this post</h4> 
+          </div> 
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-8">
+                <input type="text" class="form-control" placeholder="Title" ng-model="comment.title">
+              </div>
+              <div class="col-xs-4"><!-- Placeholder --></div>
+            </div> 
+            <textarea class="form-control" rows="3" placeholder="Post" ng-model="comment.content"></textarea> 
+          </div> 
+
+          <div class="modal-footer"> 
+            <div class="col-xs-4 col-xs-offset-4">
+              <button type="button" id="cancel-reply" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary">Post</button> 
+            </div>
+          </div> 
+        </form> 
+      </div> 
+    </div>
+    <!-- New Reply Modal End-->
+
     <!-- FULL POST TEMPLATE (3 SECTIONS: POST,REPLIES,NEW-REPLY) -->
     <div class="post-template" ng-repeat="post in reverse(posts)">
       <!-- Template for post -->
@@ -56,15 +89,19 @@
         <div class="col-md-6 col-md-offset-3 background-white post-main">
           <img ng-src="{{ post.creatorAvatar }}">
           <ul class="list-group">
-            <li class="list-group-item"><a class="create-reply"><i class="fa fa-reply"></i></a></li>
-            <li class="list-group-item"><a class="show-reply"><span class="badge">2</span></a></li>
+            <li class="list-group-item" ng-show="signedIn()">
+              <button type="button" data-toggle="modal" data-target="#newReplyModal"><i class="fa fa-reply"></i></button>
+              </li>
+            <li class="list-group-item">
+              <i class="badge">2</i>
+            </li>
           </ul>
-          <h5><span id="post-title">{{ post.title }}</span><span id="timestamp"> <span id="username">{{ post.creator }}</span> - <span id="date-time">{{ post.postTime }}</span> - <span id="keyword">{{ post.keyword }}</span></span></h5>
+          <h5><span class="post-title">{{ post.title }}</span><span class="timestamp"> <span class="username">{{ post.creator }}</span> - <span class="date-time">{{ post.postTime }}</span> - <span class="keyword">{{ post.keyword }}</span></span></h5>
           <p>{{ post.content }}</p>
         </div>
       </div>
 
-      <!-- Reply sample -->
+      <!-- Reply sample 
       <div class="replies hidden wrapped-up">
         <div class="row">
           <div class="col-md-6 col-md-offset-3 post-main-reply">
@@ -73,22 +110,7 @@
             <p>{{ post.content }}</p>
           </div>
         </div>
-      </div>
-
-      <!-- Template for new reply -->
-      <div class="post-reply hidden wrapped-up row text-center">
-        <div class="col-md-6 col-md-offset-3 post-reply-section">
-          <textarea class="form-control" rows="3" placeholder="Post"></textarea>
-          <div class="row">
-            <div class="col-xs-4 col-xs-offset-4">
-              <button type="button" id="cancel-reply" class="btn btn-default btn-lg btn-block">Cancel</button> 
-            </div>
-            <div class="col-xs-4">
-              <button type="button" class="btn btn-primary btn-lg btn-block">Reply</button> 
-            </div>
-          </div>
-        </div>
-      </div>
+      </div>-->
     </div>
     <!-- FULL POST TEMPLATE END -->
 

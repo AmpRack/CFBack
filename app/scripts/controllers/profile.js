@@ -1,13 +1,13 @@
 'use strict';
 
-app.controller('ProfileCtrl', function ($scope, $routeParams, $location, Post, Profile, Auth) {
-	var uid = $routeParams.userId;
-	$scope.profile = Profile.get(uid);
-	$scope.posts = Post.getPostsBy('creatorUID', uid);
+app.controller('ProfileCtrl', function ($scope, $route, $routeParams, $location, Auth, Post, Profile, userPosts) {
 	$scope.user = Auth.user;
+	var uid = $routeParams.userId;
+	
+	$scope.profile = Profile.get(uid);
 	$scope.profile.uid = uid;
+	$scope.posts = userPosts;
   	$scope.userPostCount = $scope.posts.length;
-  	$scope.user.profile.postCount += 1;
 
   	$scope.editProfile = function() {
   		console.log('Is this thing on?');
@@ -21,8 +21,13 @@ app.controller('ProfileCtrl', function ($scope, $routeParams, $location, Post, P
 			linkTitle: $scope.profile.linkTitle
 		};
 
-
   		return Auth.updateProfile(uid, template);
+  	};
+
+  	$scope.deletePost = function(thisPost) {
+  		console.log(thisPost);
+  		Post.delete(thisPost);
+  		$route.reload();
   	};
 
 	$scope.logout = Auth.logout;

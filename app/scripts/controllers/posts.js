@@ -37,10 +37,12 @@ function getTimeAsString() {
 
 // PostsCtrl handles new posts and assignments, but not comments
 app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
-  $scope.posts = Post.all;
+  $scope.user = Auth.user;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
-  $scope.user = Auth.user;
+  $scope.posts = Post.all;
+  $scope.createReply = true;
+  $scope.showReply = true;
 
   // Necessary to sort posts from newest to oldest
   $scope.reverse = function(array) {
@@ -54,30 +56,44 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
     keyword: '',
     content: ''
   };
+
+  $scope.reply = {
+    title: '',
+    content: ''
+  }
   
   // Build the rest of post here, then send the object to the Post Service
-  $scope.submitPost = function () {
+  $scope.submitPost = function() {
   	console.log('Submitting post...');
   	$scope.post.creator = $scope.user.profile.username;
   	$scope.post.creatorUID = $scope.user.uid;
     $scope.post.creatorAvatar = $scope.user.profile.avatar;
     $scope.post.postTime = getTimeAsString();
-    $scope.post.keyword = 'Debug'; // Testing purposes only!
-    /*if ($('#post-label option:selected').val() === 'Label') {
+    $scope.post.replies = {};
+    $scope.post.keyword = 'Debug'; /* Testing purposes only!
+    if ($('#post-label option:selected').val() === 'Label') {
       $scope.post.keyword = 'Misc';
     } else {
       $scope.post.keyword = $('#post-label option:selected').val();
     }*/
+    $('#newPostModal').modal('hide');
     Post.create($scope.post).then(function () {
-      $location.path('/');
+      $location.path('/main');
       $scope.post = {title: '', label: '', content: ''};
     });
-
-    Profile.incPost($scope.user.uid);
   };
 
-  $scope.deletePost = function (post) {
-    Post.delete(post);
-  };
+  $scope.addComment = function() {
+    console.log('Adding comment...');
+    $scope.reply.creator = $scope.user.profile.username;
+    $scope.reply.creatorUID = $scope.user.uid;
+    $scope.reply.creatorAvatar = $scope.user.profile.avatar;
+    $scope.reply.postTime = getTimeAsString();
+    $('#newReplyModal').modal('hide');
 
+    Post.addReply($scope.reply).then(function() {
+      $location.path('/main');
+      $scope.reply = {title: '', label: '', content: ''};
+    });
+  }
 });

@@ -4,6 +4,7 @@
 app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $firebase, $location) {
 	var ref = new Firebase(FIREBASE_URL);	// Access the firebase url
 	var auth = $firebaseSimpleLogin(ref);	// Access the firebase login service
+	var profileRef = $firebase(ref.child('profile'));
 
 	var Auth = {
 		register: function (user) {
@@ -19,7 +20,6 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 				link: 'http://www.codifyacademy.com',		// User personal link
 				linkTitle: 'Codify Academy Homepage'		// Personal link description
 			};	
-			var profileRef = $firebase(ref.child('profile'));
 			return profileRef.$set(user.uid, profile);
 		},
 		login: function (user) {
@@ -35,8 +35,7 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 	      	return !!Auth.user.provider;
 	    },
 	    updateProfile: function(uid, newInfo) {
-	    	var profileRef = $firebase(ref.child('profile').child(uid));
-			return profileRef.$set(uid, newInfo);
+	    	return profileRef.$set(uid, newInfo);
 	    },
 		user: {}
 	};
@@ -45,7 +44,6 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 	$rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
 	  angular.copy(user, Auth.user);
 	  Auth.user.profile = $firebase(ref.child('profile').child(Auth.user.uid)).$asObject();
-	  console.log(user);
 	  console.log('Logged in');
 	});
 

@@ -23,11 +23,11 @@ First, a quick rundown of each folder.</p>
  <li>+ Users can post a link with a title to firebase</li>
  <li>+ The navbar can be used to logout, and is ready to link to the user profile.</li>
  <li>+ Posting is rough, but functional. </li>
- <li>+ User profiles are mostly linked, and display user posts. </li>
- <li>- The template for replies/comments is still broken.</li>
+ <li>+ User profiles are complete, except for user avatar uploading. </li>
+ <li>~ The back-end for fixing the reply section is mostly in place, but the animations are broken. Using modal for testing.</li>
  <li>= Functionally, the last big thing to add is a post queue to control how many posts display at a time, and link to the 'load more posts' button.</li>
- <li>= There's also some work to be done on the profile controller and the user database in general, mostly reorganization.</li>
  <li>= The back-end libraries are reorganized, and migrating away from the boilerplate</li>
+ <li>* Database and auth system needs to be reset at some point. 
  </ul>
  
  
