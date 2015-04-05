@@ -21,7 +21,6 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       return $firebase(ref.child('posts')).then(function(posts){
       var output = [];
       console.log('Got key ' + key + ' and value ' + value);
-      console.log(posts);
       for (var i = 0; i < posts.length; i++) {
         if (posts[i][key] === value) {
           console.log(posts[i]);
@@ -37,10 +36,10 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       return $firebase(ref.child('posts')).$remove(post.$id);
     },
     comments: function (post) {
-      return $firebase(ref.child('posts').child(post.$id).child('comments')).$asArray();
+      return $firebase(ref.child('replies').child(post.$id)).$asArray();
     },
-    addReply: function (post, comment) {
-      return $firebase(ref.child('posts').child(post.$id).child('comments')).$push(comment);
+    addReply: function (reply, parentId) {
+      return $firebase(ref.child('replies').child(parentId)).$push(reply);
     }
   };
 	return Post;

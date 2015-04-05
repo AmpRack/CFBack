@@ -1,6 +1,6 @@
 <h2>Codify_Forum</h2>
 <hr/>
-<p>Node.js, Bower, and Grunt are required. Due to folder-name length issues, the /node_modules/ folder is no longer included in libraries.zip. Please supply your own. Decompress libraries.zip, then add your /node_modules/ and the included /app/ folder. 
+<p>Node.js, Bower, and Grunt are required. To use, decompress libraries.rar, and add the included /app/ folder. 
 
 First, a quick rundown of each folder.</p>
 
@@ -24,10 +24,10 @@ First, a quick rundown of each folder.</p>
  <li>+ The navbar can be used to logout, and is ready to link to the user profile.</li>
  <li>+ Posting is rough, but functional. </li>
  <li>+ User profiles are complete, except for user avatar uploading. </li>
- <li>~ The back-end for fixing the reply section is mostly in place, but the animations are broken. Using modal for testing.</li>
+ <li>+ Replies can be posted, stored to <em>posts.postId.replies</em> . Now we just need to retrieve and display them.</li>
  <li>= Functionally, the last big thing to add is a post queue to control how many posts display at a time, and link to the 'load more posts' button.</li>
  <li>= The back-end libraries are reorganized, and migrating away from the boilerplate</li>
- <li>* Database and auth system needs to be reset at some point. 
+ <li>* Database and auth system needs to be reset at some point. </li>
  </ul>
  
  

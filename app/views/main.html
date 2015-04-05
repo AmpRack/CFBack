@@ -53,7 +53,7 @@
     <div class="modal fade" id="newReplyModal" tabindex="-1" role="dialog" aria-labelledby="newReplyModalLabel" aria-hidden="true"> 
       <div class="modal-dialog"> 
 
-        <form class="modal-content" ng-submit="addComment()"> 
+        <form class="modal-content" ng-submit="addReply(post)"> 
           <div class="modal-header"> 
             <button type="button" class="close" data-dismiss="modal"><spanaria-hidden="true">×</span><spanclass="sr-only"></span></button> 
             <h4 class="modal-title" id="newReplyModalLabel">Comment on this post</h4> 
@@ -62,11 +62,11 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-xs-8">
-                <input type="text" class="form-control" placeholder="Title" ng-model="comment.title">
+                <input type="text" class="form-control" placeholder="Title" ng-model="reply.title">
               </div>
               <div class="col-xs-4"><!-- Placeholder --></div>
             </div> 
-            <textarea class="form-control" rows="3" placeholder="Post" ng-model="comment.content"></textarea> 
+            <textarea class="form-control" rows="3" placeholder="Reply" ng-model="reply.content"></textarea> 
           </div> 
 
           <div class="modal-footer"> 
@@ -90,7 +90,7 @@
           <img ng-src="{{ post.creatorAvatar }}">
           <ul class="list-group">
             <li class="list-group-item" ng-show="signedIn()">
-              <button type="button" data-toggle="modal" data-target="#newReplyModal"><i class="fa fa-reply"></i></button>
+              <button type="button" data-toggle="modal" data-target="#newReplyModal" ng-click="getPostId(post.$id)"><i class="fa fa-reply"></i></button>
               </li>
             <li class="list-group-item">
               <i class="badge">2</i>
