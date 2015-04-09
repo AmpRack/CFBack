@@ -1,10 +1,6 @@
-<!-- Turn the nav on! -->
-<script>$('#nav-master').css('display','block');</script>
-<div ng-controller="PostsCtrl">
-  <div ng-hide="signedIn()" id="peek">
-    <!-- Placeholder for if a user tries to look at /main/ while logged out -->
-  </div>
+<script>$('#nav-master').css('display','block');</script> <!-- Turn the nav on! -->
 
+<div ng-controller="PostsCtrl">
   <div ng-show="signedIn()" class="main-body-background">
   <div class="container-fluid content-section">
 
@@ -15,10 +11,10 @@
       </div>
     </div>
       
-    <!-- New Post Modal --> 
+    <!-- Add New Post Modal --> 
     <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true"> 
       <div class="modal-dialog"> 
-        <form  class="modal-content" ng-submit="submitPost()" ng-show="signedIn()"> 
+        <form class="modal-content" ng-submit="submitPost()" ng-show="signedIn()"> 
           <div class="modal-header"> 
             <button type="button" class="close" data-dismiss="modal"><spanaria-hidden="true">×</span><spanclass="sr-only"></span></button> 
             <h4 class="modal-title" id="newPostModalLabel">New Post</h4> 
@@ -47,72 +43,84 @@
         </form> 
       </div> 
     </div>
-    <!-- New Post Modal End -->
+    <!-- Add New Post Modal End -->
 
-    <!-- New Reply Modal Start -->
-    <div class="modal fade" id="newReplyModal" tabindex="-1" role="dialog" aria-labelledby="newReplyModalLabel" aria-hidden="true"> 
-      <div class="modal-dialog"> 
 
-        <form class="modal-content" ng-submit="addReply(post)"> 
-          <div class="modal-header"> 
-            <button type="button" class="close" data-dismiss="modal"><spanaria-hidden="true">×</span><spanclass="sr-only"></span></button> 
-            <h4 class="modal-title" id="newReplyModalLabel">Comment on this post</h4> 
-          </div> 
-
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-xs-8">
-                <input type="text" class="form-control" placeholder="Title" ng-model="reply.title">
-              </div>
-              <div class="col-xs-4"><!-- Placeholder --></div>
-            </div> 
-            <textarea class="form-control" rows="3" placeholder="Reply" ng-model="reply.content"></textarea> 
-          </div> 
-
-          <div class="modal-footer"> 
-            <div class="col-xs-4 col-xs-offset-4">
-              <button type="button" id="cancel-reply" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-            <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary">Post</button> 
-            </div>
-          </div> 
-        </form> 
-      </div> 
-    </div>
-    <!-- New Reply Modal End-->
-
-    <!-- FULL POST TEMPLATE (3 SECTIONS: POST,REPLIES,NEW-REPLY) -->
+    <!-- Main Post Template -->
     <div class="post-template" ng-repeat="post in reverse(posts)">
-      <!-- Template for post -->
       <div class="row">
         <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <img ng-src="{{ post.creatorAvatar }}">
+          <img ng-src="{{ post.creatorAvatar }}" />
           <ul class="list-group">
-            <li class="list-group-item" ng-show="signedIn()">
-              <button type="button" data-toggle="modal" data-target="#newReplyModal" ng-click="getPostId(post.$id)"><i class="fa fa-reply"></i></button>
-              </li>
             <li class="list-group-item">
-              <i class="badge">2</i>
+	            <i class="badge" data-toggle="modal" data-target="#viewPostModal" ng-click="getPostId(post.$id)">0</i>
             </li>
           </ul>
-          <h5><span class="post-title">{{ post.title }}</span><span class="timestamp"> <span class="username">{{ post.creator }}</span> - <span class="date-time">{{ post.postTime }}</span> - <span class="keyword">{{ post.keyword }}</span></span></h5>
-          <p>{{ post.content }}</p>
-        </div>
-      </div>
 
-      <!-- Reply sample 
-      <div class="replies hidden wrapped-up">
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3 post-main-reply">
-            <img src="images/user-2.jpg">
-            <h5><span>{{ post.creator }}</span> - <span>{{ post.postTime }}</span></h5>
-            <p>{{ post.content }}</p>
-          </div>
-        </div>
-      </div>-->
+          <h5>
+            <span class="post-title">{{ post.title }}</span><br />
+            <span class="timestamp">
+              <a ng-click="getUserPosts(post.creatorUID)">{{ post.creator }}</a> - 
+              <a ng-click="getDatePosts(post.postDate)">{{ post.postTime }} {{ post.postDate }}</a> - 
+              <a ng-click="getKeywordPosts(post.keyword)">{{ post.keyword }}</a>
+            </span>
+          </h5>
+          <p>{{ post.content }}</p>
+				</div>
+      </div>
     </div>
-    <!-- FULL POST TEMPLATE END -->
+    <!-- Individual Post Template End -->
+
+
+    <!-- View Post Modal -->
+		<div class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="viewPostModalLabel" aria-hidden="true"> 
+      <div class="modal-dialog"> 
+
+      	<div class="modal-content">
+		      <div class="modal-header"> 
+		      	<img ng-src="{{ viewPost.creatorAvatar }}" />
+		        <button type="button" class="close" data-dismiss="modal"><spanaria-hidden="true">×</span><span class="sr-only"></span></button> 
+		        <h4 class="modal-title" id="viewPostModalLabel">{{ viewPost.title }}</h4>
+		        <h4 class="timestamp">
+	              <span>{{ viewPost.creator }} - 
+	              {{ viewPost.postTime }} {{ viewPost.postDate }} - 
+	              {{ viewPost.keyword }}</span>
+		        </h4>
+		      </div> 
+
+		      <div class="modal-body">
+		      	<div class="post-content">
+		        	<h4>{{ viewPost.content }}</h4>
+		        </div>
+
+		        <div class="post-template" ng-repeat="reply in replies">
+		        	<div class="row">
+		        		<div class="background-white post-main">
+		        			<!-- This should click and load a persons profile. Another modal??? -->
+          				<img ng-src="{{ reply.creatorAvatar }}" /> 
+				          <h5><span class="timestamp">
+              			{{ reply.creator }} - 
+              			{{ reply.postTime }} {{ reply.postDate }}
+            			</span></h5>
+          				<p>{{ reply.content }}</p>
+								</div>
+		        	</div>
+		        </div>
+		      </div> 
+
+		      <form class="modal-footer" ng-submit="addReply(viewPost)"> 
+	      		<textarea class="form-control" rows="3" placeholder="Reply" ng-model="reply.content"></textarea> 
+		        <div class="col-xs-4 col-xs-offset-4">
+		          <button type="button" id="cancel-reply" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		        </div>
+		        <div class="col-xs-4">
+		          <button type="submit" class="btn btn-primary">Post</button> 
+		        </div>
+		      </form>
+	      </div>
+      </div> 
+    </div>
+    <!-- View Post Modal End-->
 
     <!-- Button link for more posts -->
     <div class="row text-center">

@@ -14,7 +14,7 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
         return postRef;
       });*/
     },
-    get: function (postId) {
+    getPost: function (postId) {
       return $firebase(ref.child('posts').child(postId)).$asObject();
     },
     getPostsBy: function (key, value) {
@@ -23,7 +23,6 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       console.log('Got key ' + key + ' and value ' + value);
       for (var i = 0; i < posts.length; i++) {
         if (posts[i][key] === value) {
-          console.log(posts[i]);
           output.push(posts[i]);
         }
       }
@@ -33,13 +32,20 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
     },
     delete: function (post) {
       console.log('Attempting to delete post!');
-      return $firebase(ref.child('posts')).$remove(post.$id);
+      return $firebase(ref.child('posts')).$remove(post.$id).then(function(post){
+        if ($firebase(ref.child('replies').child(post.$id)).$asArray().length) {
+          return $firebase(ref.child('replies')).$remove(post.$id);
+        }
+      });
     },
-    comments: function (post) {
-      return $firebase(ref.child('replies').child(post.$id)).$asArray();
+    getReplies: function (postId) {
+      return $firebase(ref.child('replies').child(postId)).$asArray();
     },
-    addReply: function (reply, parentId) {
-      return $firebase(ref.child('replies').child(parentId)).$push(reply);
+    addReply: function (reply, postId) {
+      return $firebase(ref.child('replies').child(postId)).$push(reply);
+    },
+    replyCount: function (postId) {
+      return $firebase(ref.child('replies').child(postId)).$asArray().length;
     }
   };
 	return Post;

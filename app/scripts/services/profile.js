@@ -1,7 +1,7 @@
 'use strict';
 
 // Controls user-specific functions and objects
-app.factory('Profile', function (FIREBASE_URL, $firebase) {
+app.factory('Profile', function (FIREBASE_URL, $firebase, imgur) {
 	var ref = new Firebase(FIREBASE_URL);
 
 	var Profile = {
@@ -19,14 +19,6 @@ app.factory('Profile', function (FIREBASE_URL, $firebase) {
       		}
       		return output;
 			});
-		},
-		incPost: function() { // Increment post counter, not ready yet!
-			/*var userRef = profile.get(userId);
-			console.log(userRef.postCount);
-			console.log(userRef);
-			var postCount = userRef.postCount;
-			postCount++;
-			return $firebase(ref.child('profile').child(userId))$set(postCount, postCount);*/
 		}
 	};
 

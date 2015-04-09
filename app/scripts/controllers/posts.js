@@ -13,7 +13,8 @@ function scrubTime(unit) {
 }
 
 // When a post is made, get the current date/time
-function getTimeAsString() {
+// Hey dummy! Turn this into something that returns an object!
+function getTimeAsString($scope) {
   var currentTime = new Date();
   var hrs  = currentTime.getHours();
   var mins = scrubTime(currentTime.getMinutes());
@@ -32,7 +33,9 @@ function getTimeAsString() {
     hrs = scrubTime(hrs);
     ampm = 'AM';
   }
-  return (hrs + ':' + mins + ampm + ' ' + mon + '/' + day + '/' + year);
+  $scope.post.postTime = hrs + ':' + mins + ampm;
+  $scope.post.postDate = mon + '/' + day + '/' + year;
+//  return (hrs + ':' + mins + ampm + ' ' + mon + '/' + day + '/' + year);
 }
 
 // PostsCtrl handles new posts and assignments, but not comments
@@ -41,12 +44,15 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.posts = Post.all;
+  $scope.replies = [];
   $scope.createReply = true;
   $scope.showReply = true;
+  $scope.viewPost = {};
   var thisPostId = '';
+
   // Necessary to sort posts from newest to oldest
   $scope.reverse = function(array) {
-  	var copy = [].concat(array);
+    var copy = [].concat(array);
     return copy.reverse();
   };
 
@@ -58,7 +64,6 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
   };
 
   $scope.reply = {
-    title: '',
     content: ''
   };
   
@@ -68,7 +73,7 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
   	$scope.post.creator = $scope.user.profile.username;
   	$scope.post.creatorUID = $scope.user.uid;
     $scope.post.creatorAvatar = $scope.user.profile.avatar;
-    $scope.post.postTime = getTimeAsString();
+    getTimeAsString($scope);
     $scope.post.replies = {};
     $scope.post.keyword = 'Debug'; /* Testing purposes only!
     if ($('#post-label option:selected').val() === 'Label') {
@@ -78,30 +83,34 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
     }*/
     $('#newPostModal').modal('hide');
     Post.create($scope.post).then(function () {
-      $location.path('/main');
       $scope.post = {title: '', keyword: '', content: ''};
+      $location.path('/main');
     });
   };
 
   // Broadcasts the postId to the scope, so replies match up to posts
   $scope.getPostId = function(postId) {
     thisPostId = postId;
+    $scope.viewPost = Post.getPost(postId);
+    $scope.replies = Post.getReplies(postId);
+    $scope.viewPost.replyCount = $scope.replies.length;
   };
 
-  $scope.addReply = function(post) {
+  $scope.addReply = function() {
     $scope.reply.creator = $scope.user.profile.username;
     $scope.reply.creatorUID = $scope.user.uid;
     $scope.reply.creatorAvatar = $scope.user.profile.avatar;
-    $scope.reply.postTime = getTimeAsString();
+    getTimeAsString($scope);
     $scope.reply.parentId = thisPostId;
     $scope.reply.authorSeen = false;
     
-
     console.log('Adding reply...');
+    $('#viewPostModal').modal('hide');
     Post.addReply($scope.reply, thisPostId).then(function() {
-      $location.path('/main');
-      $scope.reply = {title: '', content: ''};
+      $scope.reply = {content: ''};
       thisPostId = '';
+      $scope.viewPost = {};
+      $location.path('/main');
     });
   };
 });

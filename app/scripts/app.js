@@ -64,10 +64,6 @@ var app = angular
           }
         }
       })
-      .when('/posts/:postId', {
-        templateUrl: '/views/showpost.html',
-        controller:  'PostViewCtrl'
-      })
       .when('/users/:userId', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl',

@@ -24,10 +24,13 @@ First, a quick rundown of each folder.</p>
  <li>+ The navbar can be used to logout, and is ready to link to the user profile.</li>
  <li>+ Posting is rough, but functional. </li>
  <li>+ User profiles are complete, except for user avatar uploading. </li>
- <li>+ Replies can be posted, stored to <em>posts.postId.replies</em> . Now we just need to retrieve and display them.</li>
- <li>= Functionally, the last big thing to add is a post queue to control how many posts display at a time, and link to the 'load more posts' button.</li>
- <li>= The back-end libraries are reorganized, and migrating away from the boilerplate</li>
- <li>* Database and auth system needs to be reset at some point. </li>
+ <li>+ Replies work properly now. </li>
+ <li>- Reply timestamp needs to be fixed, as well as the reply count for each post.</li>
+ <li>= Need to add a 'viewProfileModal' when you click a user's avatar.</li>
+ <li>= Also need to make the post queue service, and link to the 'more posts' button.</li>
+ <li>= Also also need to condense post.content down to post.preview, to control the height of the container.</li>
+ <li>= The back-end libraries are reorganized, and migrating away from the boilerplate.</li>
+ <li>! Database and auth system were reset on April 8th! Please re-register your account. </li>
  </ul>
  
  
