@@ -1,15 +1,13 @@
 <nav id="nav-master" ng-controller="NavCtrl" class="navbar navbar-fixed-top" role="navigation">
   <div class="container-fluid background-white">
+
     <div class="navbar-header"> 
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse"> 
-      <span class="sr-only">Toggle navigation</span>
-      <!-- Use as icon for dropdown menu -->
-      <img src="images/user.jpg" class="navbar-img">
+      <a id="#reply-alert"><div class="alert alert-info alert-dismissible visible-xs-inline" role="alert"><span>0</span></div></a>    
       </button> 
-      <a class="navbar-brand" href="#/">Return to main</a> 
+      <a class="navbar-brand" href="#/"><img src="images/codify-logo.png" class="navbar-img"></a> 
     </div>
 
-    <div class="collapse navbar-collapse" id="navbar-collapse">
+    <div>
       <ul class="nav navbar-nav navbar-right">
         <!-- Use jquery to toggle searchbar open/close -->
         <li>
@@ -18,21 +16,11 @@
             <input class="span2" type="text" placeholder="search">
           </div>
         </li>
-        
-        <!-- Mobile Menu options -->
-        <li class="visible-xs-inline">
-          <a ng-href="#/users/{{ user.uid }}">View Profile</a>
+        <li class="hidden-xs">
+          <a id="reply-alert" href=""><div class="alert alert-info alert-dismissible" role="alert">new comments: <span>0</span></div></a>                
         </li>
-        <li class="visible-xs-inline">
-          <a href="">Edit Profile</a>
-        </li>
-        <li class="visible-xs-inline">
-          <a href="" ng-click="logout()">Log Off</a>
-        </li>
-
-        <!-- Browser menu options -->
         <li> 
-          <a class="dropdown-toggle hidden-xs" ng-href="#/users/{{ user.uid }}" data-toggle="dropdown"><img src="images/user.jpg" class="navbar-img"></a> 
+          <a class="hidden-xs" ng-href="#/users/{{ user.uid }}" data-toggle="dropdown"><img ng-src="{{ user.profile.avatar }}" class="avatar"></a> 
 
         </li>
       </ul>  

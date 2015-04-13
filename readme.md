@@ -22,10 +22,10 @@ First, a quick rundown of each folder.</p>
  <li>+ Users can login with their email address and password</li>
  <li>+ Users can post a link with a title to firebase</li>
  <li>+ The navbar can be used to logout, and is ready to link to the user profile.</li>
- <li>+ Posting is rough, but functional. </li>
+ <li>+ User posts work as intended. </li>
  <li>+ User profiles are complete, except for user avatar uploading. </li>
  <li>+ Replies work properly now. </li>
- <li>- Reply timestamp needs to be fixed, as well as the reply count for each post.</li>
+ <li>- Reply counts don't work yet. </li>
  <li>= Need to add a 'viewProfileModal' when you click a user's avatar.</li>
  <li>= Also need to make the post queue service, and link to the 'more posts' button.</li>
  <li>= Also also need to condense post.content down to post.preview, to control the height of the container.</li>

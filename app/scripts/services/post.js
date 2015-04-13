@@ -31,10 +31,10 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       });
     },
     delete: function (post) {
-      console.log('Attempting to delete post!');
-      return $firebase(ref.child('posts')).$remove(post.$id).then(function(post){
-        if ($firebase(ref.child('replies').child(post.$id)).$asArray().length) {
-          return $firebase(ref.child('replies')).$remove(post.$id);
+      console.log('Deleting post...');
+      return $firebase(ref.child('posts')).$remove(post.$id).then(function(){
+        if ($firebase(ref.child('replies').child(post.$id))) {
+            return $firebase(ref.child('replies')).$remove(post.$id);
         }
       });
     },
