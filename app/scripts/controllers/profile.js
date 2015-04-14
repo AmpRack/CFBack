@@ -25,8 +25,9 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
   		return Auth.updateProfile(uid, template);
   	};
 
-  	$scope.deletePost = function(thisPost) {
-  		Post.delete(thisPost);
+  	$scope.deletePost = function(postId) {
+  		console.log(postId);
+  		Post.delete(postId);
   		$route.reload();
   	};
 

@@ -64,15 +64,20 @@
       </div>
     </div>
 
-    <!-- FULL POST TEMPLATE (3 SECTIONS: POST,REPLIES,NEW-REPLY) -->
-    <div id="post-template" ng-repeat="post in posts">
+    <!-- Individual Post Template -->
+    <div class="post-template" ng-repeat="post in posts">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <img ng-src="{{ post.creatorAvatar }}">
+          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="getUserId(post.creatorUID)">
+            <img ng-src="{{ post.creatorAvatar }}" class="post-avatar" />
+          </a>
           <ul class="list-group">
-            <li class="list-group-item"><a ng-click="deletePost(post)" ng-show="user.uid === post.creatorUID" class="delete-post">X</a></li>
-            <li class="list-group-item"><a class="create-reply"><i class="fa fa-reply"></i></a></li>
-            <li class="list-group-item"><a class="show-reply"><span class="badge">2</span></a></li>
+            <li class="list-group-item">
+              <a ng-click="deletePost(post.$id)" ng-show="user.uid === post.creatorUID" class="delete-post">X</a>
+            </li>
+            <li class="list-group-item">
+              <i class="badge" data-toggle="modal" data-target="#viewPostModal" ng-click="getPostId(post)"># {{ post.replyCount(post) }}</i>
+            </li>
           </ul>
           <h5>
             <span class="post-title">{{ post.title }}</span><br />
@@ -83,31 +88,55 @@
           <p>{{ post.content }}</p>
         </div>
       </div>
-
-      <!-- Reply sample -->
-      <div class="replies hidden wrapped-up">
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3 post-main-reply">
-            <img src="images/user-2.jpg">
-            <h5><span>username</span> - <span>date/time</span></h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum nobis maiores laboriosam aliquid non facilis, nemo accusamus sunt ducimus. Cupiditate pariatur unde suscipit exercitationem. Eum ipsam, praesentium eos quia obcaecati.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Template for new reply -->
-      <div class="post-reply hidden wrapped-up row text-center">
-        <div class="col-md-6 col-md-offset-3 post-reply-section">
-          <textarea class="form-control" rows="3" placeholder="Post"></textarea>
-          <div class="row">
-            <div class="col-xs-2 col-xs-offset-6">
-              <button type="button" id="cancel-reply" class="btn btn-default btn-lg btn-block">Cancel</button> 
-            </div>
-            <div class="col-xs-2">
-              <button type="button" class="btn btn-primary btn-lg btn-block">Reply</button> 
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
       <!-- FULL POST TEMPLATE END -->
+
+    <!-- View Post Modal -->
+    <div class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="viewPostModalLabel" aria-hidden="true"> 
+      <div class="modal-dialog"> 
+
+        <div class="modal-content">
+          <div class="modal-header"> 
+            <img ng-src="{{ viewPost.creatorAvatar }}" />
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button> 
+            <h4 class="modal-title" id="viewPostModalLabel">{{ viewPost.title }}</h4>
+            <h4 class="timestamp">
+                <span>{{ viewPost.creator }} - 
+                {{ viewPost.postTime }} {{ viewPost.postDate }} - 
+                {{ viewPost.keyword }}</span>
+            </h4>
+          </div> 
+
+          <div class="modal-body">
+            <div class="post-content">
+              <h4>{{ viewPost.content }}</h4>
+            </div>
+
+            <div class="post-template" ng-repeat="reply in replies">
+              <div class="row">
+                <div class="background-white post-main">
+                  <!-- This should click and load a persons profile. Another modal??? -->
+                  <img ng-src="{{ reply.creatorAvatar }}" /> 
+                  <h5><span class="timestamp">
+                    {{ reply.creator }} - 
+                    {{ reply.postTime }} {{ reply.postDate }}
+                  </span></h5>
+                  <p>{{ reply.content }}</p>
+                </div>
+              </div>
+            </div>
+          </div> 
+
+          <form class="modal-footer" ng-submit="addReply(viewPost)"> 
+            <textarea class="form-control" rows="3" placeholder="Reply" ng-model="reply.content"></textarea> 
+            <div class="col-xs-4 col-xs-offset-4">
+              <button type="button" id="cancel-reply" ng-click="resetForm()" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary">Post</button> 
+            </div>
+          </form>
+        </div>
+      </div> 
+    </div>
+    <!-- View Post Modal End-->

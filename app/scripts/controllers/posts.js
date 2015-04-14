@@ -1,16 +1,16 @@
 'use strict';
 
 // PostsCtrl handles new posts and assignments, but not comments
-app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
+app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
   $scope.user = Auth.user;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.posts = Post.all;
   $scope.replies = [];
-  $scope.createReply = true;
-  $scope.showReply = true;
   $scope.viewPost = {};
+  $scope.viewUser = {};
   var thisPostId = '';
+  var profileId = '';
 
   // Necessary to sort posts from newest to oldest
   $scope.reverse = function(array) {
@@ -18,16 +18,9 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
     return copy.reverse();
   };
 
-  // Individual posts contain this info, 
-  $scope.post = {
-    title: '',
-    keyword: '',
-    content: ''
-  };
-
-  $scope.reply = {
-    content: ''
-  };
+  // Individual post form info, 
+  $scope.post = { title: '', keyword: '', content: '' };
+  $scope.reply = { content: '' };
   
   // Build the rest of post here, then send the object to the Post Service
   $scope.submitPost = function() {
@@ -38,7 +31,6 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
     $scope.post.creator = $scope.user.profile.username;
     $scope.post.creatorUID = $scope.user.uid;
     $scope.post.creatorAvatar = $scope.user.profile.avatar;
-    $scope.post.replies = {};
     $scope.post.keyword = 'Debug'; /* Testing purposes only!
     if ($('#post-label option:selected').val() === 'Label') {
       $scope.post.keyword = 'Misc';
@@ -53,12 +45,23 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth) {
   };
 
   // Broadcasts the postId to the scope, so replies match up to posts
-  $scope.getPostId = function(postId) {
-    thisPostId = postId;
-    $scope.viewPost = Post.getPost(postId);
-    $scope.replies = Post.getReplies(postId);
-    $scope.viewPost.replyCount = $scope.replies.length;
+  $scope.getPostId = function(post) {
+    thisPostId = post.$id;
+    $scope.viewPost = Post.getPost(post.$id);
+    $scope.replies = Post.getReplies(post.$id);
+    $scope.post.replyCount = Post.replyCount(post.$id);
+    // Pick up here later
   };
+
+  $scope.getUserId = function(userId) {
+    profileId = userId;
+    $scope.viewUser = Profile.get(userId);
+    $scope.viewUser.postCount = '';
+  };
+
+  $scope.getPosts = function(key, value) {
+    $scope.posts = Post.getPostsBy(key, value);
+  }
 
   $scope.addReply = function() {
     var thisTime = timeStamp();

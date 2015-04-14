@@ -1,6 +1,6 @@
 <h2>Codify_Forum</h2>
 <hr/>
-<p>Node.js, Bower, and Grunt are required. To use, decompress libraries.rar, and add the included /app/ folder. 
+<p>Node.js, Bower, and Grunt are required. To use, decompress libraries.rar, and add the included /app/ folder. If you registered an account before April 8th, make sure you re-register your account. 
 
 First, a quick rundown of each folder.</p>
 
@@ -25,8 +25,11 @@ First, a quick rundown of each folder.</p>
  <li>+ User posts work as intended. </li>
  <li>+ User profiles are complete, except for user avatar uploading. </li>
  <li>+ Replies work properly now. </li>
- <li>- Reply counts don't work yet. </li>
- <li>= Need to add a 'viewProfileModal' when you click a user's avatar.</li>
+ <li>- Reply counts aren't working yet, but I think a filter MAY be the answer... </li>
+ <li>+ Timestamp elements are now clickable, and work as a rudimentary search option.</li>
+ <li>+ Avatars are clickable, and load the user's profile. </li>
+ <li>- User profiles need to show the user's post count and reply count. </li>
+ <li>= The navbar will show any new comments left for a user. Not functional yet.</li>
  <li>= Also need to make the post queue service, and link to the 'more posts' button.</li>
  <li>= Also also need to condense post.content down to post.preview, to control the height of the container.</li>
  <li>= The back-end libraries are reorganized, and migrating away from the boilerplate.</li>
