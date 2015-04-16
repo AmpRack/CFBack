@@ -1,19 +1,18 @@
 <nav id="nav-master" ng-controller="NavCtrl" class="navbar navbar-fixed-top" role="navigation">
   <div class="container-fluid background-white">
-    <div class="navbar-header"> 
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse"> 
-      <span class="sr-only">Toggle navigation</span>
-      <!-- Mobile info alert special ID reply-alert
-           toggle hidden class to dismiss -->
-      <a id="#reply-alert" href=""><div class="alert alert-info alert-dismissible visible-xs-inline" role="alert"><span>0</span></div></a>
 
-      <!-- Use as icon for dropdown menu -->
-      <img src="images/user.jpg" class="navbar-img">
-      </button> 
-      <a class="navbar-brand" href="#/"><img src="images/conclave-logo.png"></a>  
+    <div class="navbar-header"> 
+      <a id="#reply-alert">
+        <div class="alert alert-info alert-dismissible visible-xs-inline" role="alert">
+          <span>0</span>
+        </div>
+      </a>    
+      <a class="navbar-brand" href="#/">
+        <img src="images/conclave-logo.png" class="navbar-img" />
+      </a> 
     </div>
 
-    <div class="collapse navbar-collapse" id="navbar-collapse">
+    <div>
       <ul class="nav navbar-nav navbar-right">
         <!-- Use jquery to toggle searchbar open/close -->
         <li>
@@ -24,28 +23,16 @@
         </li>
         <!-- Info alert for new comments toggle hidden class to dismiss -->
         <li class="hidden-xs">
-          <a id="reply-alert" href=""><div class="alert alert-info alert-dismissible" role="alert">new comments: <span>0</span></div></a>                
+          <a id="reply-alert" href="">
+            <div class="alert alert-info alert-dismissible" role="alert">
+              new comments: <span>0</span>
+            </div>
+          </a>                
         </li>
-        
-        <!-- Mobile Menu options -->
-        <li class="visible-xs-inline">
-          <a ng-href="#/users/{{ user.uid }}">View Profile</a>
-        </li>
-        <li class="visible-xs-inline">
-          <a href="">Edit Profile</a>
-        </li>
-        <li class="visible-xs-inline">
-          <a href="" ng-click="logout()">Log Off</a>
-        </li>
-
-        <!-- Browser menu options -->
         <li> 
-          <a id="dropdown-browser"class="dropdown-toggle hidden-xs" data-toggle="dropdown"><img src="images/user.jpg" class="navbar-img"></a> 
-          <ul class="dropdown-menu" role="menu"> 
-            <li><a ng-href="#/users/{{ user.uid }}">View Profile</a></li> 
-            <li><a href="#">Edit Profile</a></li> 
-            <li id="logoff"><a href="#">Log Off</a></li> 
-          </ul> 
+          <a class="hidden-xs" ng-href="#/users/{{ user.uid }}" data-toggle="dropdown">
+            <img ng-src="{{ user.profile.avatar }}" class="avatar" />
+          </a> 
         </li>
       </ul>  
     <!-- End collapse navbar lists -->
