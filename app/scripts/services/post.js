@@ -12,17 +12,25 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       return posts.$add(post);
     },
 
-    addReply: function (reply, postId) {
-      return $firebase(ref.child('replies').child(postId)).$push(reply);
+    addReply: function (reply) {
+      return $firebase(ref.child('replies').child(reply.parentId)).$push(reply).then(function(){
+        console.log(reply.parentId.toString());
+        var thisPost = $firebase(ref.child('posts').child(reply.parentId)).$asObject();
+        var count = thisPost.replyCount + 1;
+        thisPost.replyCount = count;
+        return thisPost.$save();
+      });
     },
 
-    delete: function (postId) {
-      console.log('Deleting post...');
-      return $firebase(ref.child('posts')).$remove(postId).then(function(){
-        if ($firebase(ref.child('replies').child(postId))) {
-            return $firebase(ref.child('replies')).$remove(postId);
-        }
-      });
+    deletePost: function (postId) {
+      return $firebase(ref.child('posts')).$remove(postId);
+    },
+
+    deleteReply: function(postId) {
+      if ($firebase(ref.child('replies').child(postId))) {
+        console.log('Deleting replies...');
+        return $firebase(ref.child('replies')).$remove(postId);
+      }
     },
 
     getPost: function (postId) {
@@ -44,12 +52,7 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
     },
 
     replyCount: function (postId) {
-      if ($firebase(ref.child('replies').child(postId)).$asArray()) {
-        console.log('Found replies for ' + postId);
-        return $firebase(ref.child('replies').child(postId)).$asArray().length;
-      } else {
-        return 0;
-      };
+      return $firebase(ref.child('posts').child(postId)).$asObject().replyCount;
     }
 
   };

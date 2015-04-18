@@ -3,7 +3,6 @@
 app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post, userPosts) {
 	$scope.user = Auth.user;
 	var uid = $routeParams.userId;
-	var newAvatar = $('#newAvatar');
 	
 	$scope.posts = userPosts;
   	$scope.userPostCount = $scope.posts.length;
@@ -22,12 +21,14 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
 		};
 
   		$('#editProfileModal').modal('hide');
+  		console.log('Updating profile...');
   		return Auth.updateProfile(uid, template);
   	};
 
   	$scope.deletePost = function(postId) {
-  		console.log(postId);
-  		Post.delete(postId);
+  		console.log('Deleting post...');
+  		Post.deletePost(postId);
+  		Post.deleteReply(postId);
   		$route.reload();
   	};
 

@@ -31,6 +31,7 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
     $scope.post.creator = $scope.user.profile.username;
     $scope.post.creatorUID = $scope.user.uid;
     $scope.post.creatorAvatar = $scope.user.profile.avatar;
+    $scope.post.replyCount = 0;
     $scope.post.keyword = 'Debug'; /* Testing purposes only!
     if ($('#post-label option:selected').val() === 'Label') {
       $scope.post.keyword = 'Misc';
@@ -61,7 +62,7 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
 
   $scope.getPosts = function(key, value) {
     $scope.posts = Post.getPostsBy(key, value);
-  }
+  };
 
   $scope.addReply = function() {
     var thisTime = timeStamp();
