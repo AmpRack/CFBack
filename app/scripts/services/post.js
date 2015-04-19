@@ -8,17 +8,16 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
   var Post = {
     all: posts,
 
-    create: function (post) {
+    addPost: function (post) {
       return posts.$add(post);
     },
 
     addReply: function (reply) {
       return $firebase(ref.child('replies').child(reply.parentId)).$push(reply).then(function(){
-        console.log(reply.parentId.toString());
-        var thisPost = $firebase(ref.child('posts').child(reply.parentId)).$asObject();
-        var count = thisPost.replyCount + 1;
-        thisPost.replyCount = count;
-        return thisPost.$save();
+        return $firebase(ref.child('posts').child(reply.parentId)).$asObject().$loaded().then(function(thisPost) {
+          thisPost.replyCount += 1;
+          return thisPost.$save();
+        });
       });
     },
 

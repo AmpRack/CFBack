@@ -39,7 +39,7 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
       $scope.post.keyword = $('#post-label option:selected').val();
     }*/
     $('#newPostModal').modal('hide');
-    Post.create($scope.post).then(function () {
+    Post.addPost($scope.post).then(function () {
       $scope.resetForm();
       $location.path('/main');
     });
