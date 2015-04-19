@@ -1,7 +1,7 @@
 'use strict';
 
 // PostsCtrl handles new posts and assignments, but not comments
-app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
+app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
   $scope.user = Auth.user;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
@@ -41,7 +41,7 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
     $('#newPostModal').modal('hide');
     Post.addPost($scope.post).then(function () {
       $scope.resetForm();
-      $location.path('/main');
+      $route.reload();
     });
   };
 
@@ -50,8 +50,6 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
     thisPostId = post.$id;
     $scope.viewPost = Post.getPost(post.$id);
     $scope.replies = Post.getReplies(post.$id);
-    $scope.post.replyCount = Post.replyCount(post.$id);
-    // Pick up here later
   };
 
   $scope.getUserId = function(userId) {
@@ -80,7 +78,7 @@ app.controller('PostsCtrl', function ($scope, $location, Post, Auth, Profile) {
       $scope.reply = {content: ''};
       thisPostId = '';
       $scope.viewPost = {};
-      $location.path('/main');
+      $route.reload();
     });
   };
 

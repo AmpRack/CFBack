@@ -7,7 +7,7 @@
       <div class="col-md-6 col-md-offset-3 background-white profile-full-screen">
         <img ng-src="{{ user.profile.avatar }}">
         <h1><span>{{ user.profile.username }}</span></h1>
-        <a ng-href="{{ profile.link }}">{{ user.profile.linkTitle }}</a>
+        <a ng-href="{{ user.profile.link }}">{{ user.profile.linkTitle }}</a>
         <p>{{ user.profile.about }} {{ user.profile.email }}</p>
 
         <!-- Show user post count -->
@@ -24,7 +24,6 @@
 
         <!--EDIT PROFILE w/ modal HTML BUTTON TRIGGER-->
         <a id="editButton" data-toggle="modal" ng-hide="signedIn()" data-target="#editProfileModal">Edit Profile</a>
-        <a ng-click="logout()">Log Off</a>
 
         <!--EDIT PROFILE w/ modal HTML-->
         <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -68,15 +67,14 @@
     <div class="post-template" ng-repeat="post in posts">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="getUserId(post.creatorUID)">
-            <img ng-src="{{ post.creatorAvatar }}" class="post-avatar" />
-          </a>
+          <img ng-src="{{ post.creatorAvatar }}" class="post-avatar" />
+        
           <ul class="list-group">
             <li class="list-group-item">
               <a ng-click="deletePost(post.$id)" ng-show="user.uid === post.creatorUID" class="delete-post">X</a>
             </li>
             <li class="list-group-item">
-              <i class="badge" data-toggle="modal" data-target="#viewPostModal" ng-click="getPostId(post)"># {{ post.replyCount(post) }}</i>
+              <i class="badge" data-toggle="modal" data-target="#viewPostModal" ng-click="getPostId(post)">{{ post.replyCount }}</i>
             </li>
           </ul>
           <h5>
