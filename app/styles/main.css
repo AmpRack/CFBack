@@ -169,12 +169,6 @@ a:hover {
   height: 100%;
 }
 
-@media(max-width:767px) {
-  .navbar-brand { 
-    padding: 25px 0px 0px 25px;
-  } 
-}
-
 .navbar-nav > li > a {
   padding: 5px 15px;
 }
@@ -488,8 +482,24 @@ div.alert > span {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .content-section {
     margin-top: 86px;
+  }
+  #nav-searchbar > input {
+    position: inherit;
+    width: 95%;
+  }
+  .navbar-brand {
+    padding: 20px 0px 0px 20px;
+  }
+  .navbar-brand > img {
+    height: 8.25vw !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar-brand {
+    padding-top: 25px;
   }
 }
