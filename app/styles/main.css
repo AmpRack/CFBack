@@ -502,4 +502,7 @@ div.alert > span {
   .navbar-brand {
     padding-top: 25px;
   }
+  #nav-searchbar > input {
+    width: 90%;
+  }
 }
