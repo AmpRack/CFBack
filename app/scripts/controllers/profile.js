@@ -7,11 +7,12 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
 	$scope.posts = userPosts;
 
   	$scope.editProfile = function() {
+  		var newAvatar = document.getElementById('newAvatar');
 		var template = {
 			username: $scope.user.profile.username,
 			about: $scope.user.profile.about,
 			avatar: $scope.user.profile.avatar,
-			postCount: $scope.userPostCount,
+			postCount: $scope.user.profile.postCount,
 			replyCount: $scope.user.profile.replyCount,
 			link: $scope.user.profile.link,
 			linkTitle: $scope.user.profile.linkTitle
@@ -19,6 +20,12 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
 
   		$('#editProfileModal').modal('hide');
   		console.log('Updating profile...');
+  		if (newAvatar.files[0]) {
+  			imgur.upload(newAvatar.files[0]).then(function(model) {
+  				console.log(model.link);
+  			});
+  		}
+  		// Get imgur api key! 
   		return Auth.updateProfile(uid, template);
   	};
 
