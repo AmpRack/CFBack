@@ -1,15 +1,12 @@
 'use strict';
 
-app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post, userPosts) {
+app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post, userPosts, imgur) {
 	$scope.user = Auth.user;
 	var uid = $routeParams.userId;
 	var thisPostId = '';
-	
 	$scope.posts = userPosts;
-  	$scope.userPostCount = $scope.posts.length;
 
   	$scope.editProfile = function() {
-  		// Upload to imgur, get return, then feed to template
 		var template = {
 			username: $scope.user.profile.username,
 			about: $scope.user.profile.about,
@@ -58,6 +55,11 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
       		$scope.viewPost = {};
       		$route.reload();
       	});
+  	};
+
+  	$scope.uploadAvatar = function(){
+  		// Using ng-imgur, get the user's file, upload, then return a string
+  		// Send the string to editProfile... ? Or maybe just .$save() the profile.
   	};
 
 	$scope.logout = Auth.logout;

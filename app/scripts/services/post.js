@@ -9,7 +9,12 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
     all: posts,
 
     addPost: function (post) {
-      return posts.$add(post);
+      return posts.$add(post).then(function(){
+        return $firebase(ref.child('profile').child(post.creatorUID)).$asObject().$loaded().then(function(thisUser) {
+          thisUser.postCount += 1;
+          return thisUser.$save();
+        });
+      });
     },
 
     addReply: function (reply) {
@@ -17,7 +22,12 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
         return $firebase(ref.child('posts').child(reply.parentId)).$asObject().$loaded().then(function(thisPost) {
           thisPost.replyCount += 1;
           return thisPost.$save();
-        });
+        }).then(function(){
+        return $firebase(ref.child('profile').child(reply.creatorUID)).$asObject().$loaded().then(function(thisUser) {
+          thisUser.replyCount += 1;
+          return thisUser.$save();
+        })
+      });
       });
     },
 

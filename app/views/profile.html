@@ -13,7 +13,7 @@
         <!-- Show user post count -->
         <dl class="dl-horizontal">
           <dt>Posts</dt>
-          <dd><span class="badge">{{ userPostCount }}</span></dd>
+          <dd><span class="badge">{{ user.profile.postCount }}</span></dd>
         </dl>
 
         <!-- Show user reply count -->
@@ -46,7 +46,7 @@
                       <input type="text" class="form-control" ng-model="user.profile.username" placeholder="{{ user.profile.username }}" />
                       <input type="text" class="form-control" ng-model="user.profile.link" placeholder="{{ user.profile.link }}" />
                       <input type="text" class="form-control" ng-model="user.profile.linkTitle" placeholder="{{ user.profile.linkTitle }}" />
-                      <input type="file" id="newAvatar" class="form-control" />
+                      <input type="file" accept="image/*" id="newAvatar" class="form-control" />
                     </div>
                   </div>
                   <textarea class="form-control" rows="5" ng-model="profile.about" placeholder="About Me"></textarea>
@@ -113,7 +113,6 @@
             <div class="post-template" ng-repeat="reply in replies">
               <div class="row">
                 <div class="background-white post-main">
-                  <!-- This should click and load a persons profile. Another modal??? -->
                   <img ng-src="{{ reply.creatorAvatar }}" /> 
                   <h5><span class="timestamp">
                     {{ reply.creator }} - 
