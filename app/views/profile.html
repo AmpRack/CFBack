@@ -10,20 +10,16 @@
         <a ng-href="{{ user.profile.link }}">{{ user.profile.linkTitle }}</a>
         <p>{{ user.profile.about }} {{ user.profile.email }}</p>
 
-        <!-- Show user post count -->
         <dl class="dl-horizontal">
+          <!-- Show user post count -->
           <dt>Posts</dt>
           <dd><span class="badge">{{ user.profile.postCount }}</span></dd>
-        </dl>
-
-        <!-- Show user reply count -->
-        <dl class="dl-horizontal">
+          <!-- Show user reply count -->
           <dt>Replies</dt>
           <dd><span class="badge">{{ user.profile.replyCount }}</span></dd>
+          <!--EDIT PROFILE w/ modal HTML BUTTON TRIGGER-->
+          <dt><a id="editButton" data-toggle="modal" ng-hide="signedIn()" data-target="#editProfileModal">Edit Profile</a></dt>
         </dl>
-
-        <!--EDIT PROFILE w/ modal HTML BUTTON TRIGGER-->
-        <a id="editButton" data-toggle="modal" ng-hide="signedIn()" data-target="#editProfileModal">Edit Profile</a>
 
         <!--EDIT PROFILE w/ modal HTML-->
         <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -466,7 +466,9 @@ div.alert > span {
 .modal-body > .dl-horizontal dd > span.badge {  
   font-size: 1em;
 }
-
+#editButton {
+  font-size: small;
+}
 /*=============================
  PROFILE PAGE STYLINGS END
 ==============================*/
@@ -494,6 +496,25 @@ div.alert > span {
   }
   .navbar-brand > img {
     height: 8.25vw !important;
+  }
+  .profile-full-screen {
+    text-align: center;
+  }
+  .profile-full-screen > img {
+    height: 100px;
+    width: 100px;
+    position: inherit;
+    margin: 0 auto;
+    float: none;
+  }
+  .profile-full-screen > .dl-horizontal {
+    width: 100%;
+  }
+  .profile-full-screen > .dl-horizontal dd {
+    margin: 0;
+  }
+  #editButton {
+    font-size: xx-small;
   }
 }
 
