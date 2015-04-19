@@ -409,7 +409,6 @@ div.alert > span {
 
 /* -PROFILE VIEW STYLINGS- */
 .profile-full-screen {
-  border-bottom: 1px solid grey;
   padding: 10px;
 }
 .profile-full-screen h1, dt {
