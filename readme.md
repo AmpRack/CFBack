@@ -16,32 +16,19 @@ First, a quick rundown of each folder.</p>
  <b>scripts/filters</b>       -   Useful for any last-minute changes, post-processing<br/></p>
  
  
- <h2>Current Status</h2>
+ <h2>To-Do List</h2>
+ <p>See change.log for recent changes! (Last updated 4-22-15)</p>
  <ul>
- <li>+ Users can use their email address to register a new account</li>
- <li>+ Users can login with their email address and password</li>
- <li>+ Users can post a link with a title to firebase</li>
- <li>+ The navbar can be used to logout, and is ready to link to the user profile.</li>
- <li>+ User posts work as intended. </li>
- <li>+ User profiles are complete, except for user avatar uploading. </li>
- <li>+ Replies work properly now. </li>
- <li>- Reply counts aren't working yet, but I think a filter MAY be the answer... </li>
- <li>+ Timestamp elements are now clickable, and work as a rudimentary search option.</li>
- <li>+ Avatars are clickable, and load the user's profile. </li>
- <li>- User profiles need to show the user's post count and reply count. </li>
- <li>= The navbar will show any new comments left for a user. Not functional yet.</li>
- <li>= Also need to make the post queue service, and link to the 'more posts' button.</li>
- <li>= Also also need to condense post.content down to post.preview, to control the height of the container.</li>
- <li>= The back-end libraries are reorganized, and migrating away from the boilerplate.</li>
- <li>! Database and auth system were reset on April 8th! Please re-register your account. </li>
+ <li><b>Login</b> - Need to style error messages (#error p) </li>
+ <li><b>Nav</b> - New comment notifier needs to work. </li>
+ <li><b>Nav</b> - While the function is built, the search needs to be hooked up.</li>
+ <li><b>Main</b> - Reply count needs to be incorporated properly.</li>
+ <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
+ <li><b>Main</b> - General modal styling; more than just input boxes with placeholders.</li>
+ <li><b>Main</b> - The post service needs to be rewritten. User info shouldn't be attached directly to posts. UIDs should attach to post, then pull info from $firebase.profile.uid to put user info into the posts.</li>
+ <li><b>Profile</b> - Imgur module seems to be working, but there's 403 on upload... </li>
+ <li><b>Profile</b> - Maybe take 'Upload avatar' 'edit profile' and 'change password' and consolidate that to a single menu?</li>
+ <li><b>Profile</b> - Similarly, 'Upload Avatar' needs a modal built for it.</li>
+ <li><b>Misc</b> - Rename app from 'Codify' to 'Conclave' (requires libraries recompile)</li>
  </ul>
  
- 
- <h2>ng-properties, html tips</h2>
-  <p>Angular adds new html inline-property tags (check em out <a href="https://docs.angularjs.org/api/ng/directive">here</a>). A couple more notable ones used in the site right now are ng-show="", ng-include="", ng-click="". 
-  
- <b>ng-show="(bool)"</b> toggles an element on or off depending on some expression. For the site, it toggles elements with Auth.signedIn()
- 
- <b>ng-include="/something.html"</b> is the actual html injecting function. Usually, you just assign it to an empty div.
- 
- <b>ng-click="function()"</b> performs an action when the attached element is clicked. </p>

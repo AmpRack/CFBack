@@ -7,4 +7,9 @@ app.controller('NavCtrl', function ($scope, $routeParams, Auth) {
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.user = Auth.user;
+  $scope.newReplies = 0;
+
+  $scope.hasReplies = function() {
+  	return ($scope.newReplies > 0);
+  };
 });

@@ -26,6 +26,7 @@ a:hover {
   cursor: pointer;
 }
 
+
 /*====================
   LANDING PAGE
   ====================*/
@@ -81,14 +82,14 @@ margin: 5px 0;
 /* Bootstrap css mods */
 
 .form-control {
- 	font-family: arial;
- 	padding: 0 3px;
- 	font-size: 20px;
- 	line-height: 30px;
+  font-family: arial;
+  padding: 0 3px;
+  font-size: 20px;
+  line-height: 30px;
   margin-bottom: 15px;
- 	/*background-color: #fff; default styles */
- 	border: 2px solid #ccc !important;  
- 	border-radius: 5px !important; 
+  /*background-color: #fff; default styles */
+  border: 2px solid #ccc !important;  
+  border-radius: 5px !important; 
 }
 
 .form-control::-moz-placeholder {
@@ -120,9 +121,24 @@ a:hover {
   border-bottom: 0;
 }
 
+#registerModal input {
+  display: inline-block;
+  width: 70%;
+  float: right;
+  margin: 0;
+}
+
+#registerModal h4 {
+  display: inline-block;
+}
+
+#error p {
+  display: block;
+  /* Error Message Styling Here */
+}
 /*====================
-	LANDING PAGE END
-	====================*/
+  LANDING PAGE END
+  ====================*/
 
 /*=============================
  MAIN PAGE STYLINGS BEGIN
@@ -149,6 +165,9 @@ a:hover {
   border: 2px solid #ccc;
   border-radius: 20px !important;
 }
+  #nav-searchbar input {
+    padding-left: 5px;
+  }
 #reply-alert {
   padding-left: 0;
   padding-right: 0;
@@ -186,9 +205,18 @@ a:hover {
 
 .span2,
 .add-on {
-  border: 0 !important;
-  padding: 0 !important;
+  border: 0;
+  padding: 0;
 }
+.add-on {
+  background-color: white;
+  color: rgb(108,108,108);
+  padding-right: 5px;
+  font-size: 16px;
+}
+  .add-on:hover {
+    color: rgb(4,147,114);
+  }
 .span2:focus {
   outline-offset: 0;
   outline: 0;
@@ -313,14 +341,15 @@ div.alert > span {
 	opacity: 0.5;
 }
 
-.view-post{
+.view-post {
+    border: 1px solid rgba(0,0,0,0);
     background-color: rgba(4, 147, 114, 1.0);
     color: #fff;
     padding: 14px 16px;
     border-radius: 50%;
 }
 
-.view-post:hover{
+.view-post:hover {
   border: 1px solid grey;
 }
 .post-main > ul > li > a > span.badge {
@@ -402,10 +431,12 @@ div.alert > span {
 /*=============================
  PROFILE PAGE STYLINGS BEGIN
 ==============================*/
-
-#editButton:hover {
-  cursor: pointer;
+#editButton, #passwordButton {
+  font-size: small;
 }
+  #editButton:hover, #passwordButton:hover {
+    cursor: pointer;
+  }
 
 /* -PROFILE VIEW STYLINGS- */
 .profile-full-screen {
@@ -466,9 +497,7 @@ div.alert > span {
 .modal-body > .dl-horizontal dd > span.badge {  
   font-size: 1em;
 }
-#editButton {
-  font-size: small;
-}
+
 /*=============================
  PROFILE PAGE STYLINGS END
 ==============================*/

@@ -9,15 +9,15 @@ app.factory('Profile', function (FIREBASE_URL, $firebase, imgur) {
 			return $firebase(ref.child('profile').child(userId)).$asObject();
 		},
 
-		userPosts: function(userId) { // Retrieve 
+		userPosts: function(userId) { // Retrieve your own posts
 			return $firebase(ref.child('posts')).$asArray().$loaded().then(function(posts){
-			var output = new Array();
+			var output = [];
 			for (var i = 0; i < posts.length; i++) {
-        		if (posts[i].creatorUID === userId) {
-          			output.push(posts[i]);
-        		}
-      		}
-      		return output;
+        if (posts[i].creatorUID === userId) {
+          output.push(posts[i]);
+        	}
+      	}
+      return output;
 			});
 		}
 	};

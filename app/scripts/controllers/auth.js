@@ -30,4 +30,9 @@ app.controller('AuthCtrl', function ($scope, $location, Auth, user) {
 			$scope.error = error.toString();
 		});
 	};
+
+	// Password reset
+	$scope.resetPass = function() {
+		Auth.resetPassword($scope.userEmail);
+	};
 });

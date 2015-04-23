@@ -73,12 +73,9 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
     $scope.reply.authorSeen = false;
     
     console.log('Adding reply...');
-    $('#viewPostModal').modal('hide');
+//    $('#viewPostModal').modal('hide');
     Post.addReply($scope.reply, thisPostId).then(function() {
       $scope.reply = {content: ''};
-      thisPostId = '';
-      $scope.viewPost = {};
-      $route.reload();
     });
   };
 

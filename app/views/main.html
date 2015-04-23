@@ -11,12 +11,43 @@
       </div>
     </div>
       
+
+
+    <!-- Individual Post Template -->
+    <div class="post-template" ng-repeat="post in reverse(posts)">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 background-white post-main">
+          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="getUserId(post.creatorUID)">
+            <img ng-src="{{ post.creatorAvatar }}" class="post-avatar" />
+          </a>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <i class="view-post fa fa-plus" data-toggle="modal" data-target="#viewPostModal" ng-click="getPostId(post)"></i>
+            </li>
+            <li class="list-group-item">
+              <p>{{ post.replyCount }}</p> <!-- Testing Purposes Only! -->
+            </li>
+          </ul>
+
+          <h5>
+            <span class="post-title">{{ post.title }}</span><br />
+            <span class="timestamp">
+              <a ng-click="getPosts('creatorUID', post.creatorUID)">{{ post.creator }}</a> - 
+              <a ng-click="getPosts('postDate', post.postDate)">{{ post.postTime }} {{ post.postDate }}</a> - 
+              <a ng-click="getPosts('keyword', post.keyword)">{{ post.keyword }}</a>
+            </span>
+          </h5>
+          <p>{{ post.content }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Individual Post Template End -->
+
     <!-- Add New Post Modal --> 
     <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true"> 
       <div class="modal-dialog"> 
         <form class="modal-content" ng-submit="submitPost()" ng-show="signedIn()"> 
           <div class="modal-header"> 
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button> 
             <h4 class="modal-title" id="newPostModalLabel">New Post</h4> 
           </div> 
           <div class="modal-body">
@@ -45,49 +76,15 @@
     </div>
     <!-- Add New Post Modal End -->
 
-
-    <!-- Individual Post Template -->
-    <div class="post-template" ng-repeat="post in reverse(posts)">
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="getUserId(post.creatorUID)">
-            <img ng-src="{{ post.creatorAvatar }}" class="post-avatar" />
-          </a>
-          <ul class="list-group">
-            <li class="list-group-item">
-	            <i class="view-post fa fa-plus" data-toggle="modal" data-target="#viewPostModal" ng-click="getPostId(post)"></i>
-            </li>
-            <li class="list-group-item">
-              <p>{{ post.replyCount }}</p> <!-- Testing Purposes Only! -->
-            </li>
-          </ul>
-
-          <h5>
-            <span class="post-title">{{ post.title }}</span><br />
-            <span class="timestamp">
-              <a ng-click="getPosts('creatorUID', post.creatorUID)">{{ post.creator }}</a> - 
-              <a ng-click="getPosts('postDate', post.postDate)">{{ post.postTime }} {{ post.postDate }}</a> - 
-              <a ng-click="getPosts('keyword', post.keyword)">{{ post.keyword }}</a>
-            </span>
-          </h5>
-          <p>{{ post.content }}</p>
-				</div>
-      </div>
-    </div>
-    <!-- Individual Post Template End -->
-
-
     <!-- View Post Modal -->
 		<div class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="viewPostModalLabel" aria-hidden="true"> 
       <div class="modal-dialog"> 
-
       	<div class="modal-content">
 		      <div class="modal-header"> 
 		      	<img ng-src="{{ viewPost.creatorAvatar }}" />
-		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button> 
 		        <h4 class="modal-title" id="viewPostModalLabel">{{ viewPost.title }}</h4>
-		        <h4 class="timestamp">
-	              <span>{{ viewPost.creator }} - 
+		        <h4>
+	              <span class="timestamp">{{ viewPost.creator }} - 
 	              {{ viewPost.postTime }} {{ viewPost.postDate }} - 
 	              {{ viewPost.keyword }}</span>
 		        </h4>
@@ -101,8 +98,8 @@
 		        <div class="post-template" ng-repeat="reply in replies">
 		        	<div class="row">
 		        		<div class="background-white post-main">
-		        			<!-- This should click and load a persons profile. Another modal??? -->
-          				<img ng-src="{{ reply.creatorAvatar }}" /> 
+                <!-- View Profile Modal Here? -->
+                  <img ng-src="{{ reply.creatorAvatar }}" /> 
 				          <h5><span class="timestamp">
               			{{ reply.creator }} - 
               			{{ reply.postTime }} {{ reply.postDate }}
@@ -115,19 +112,15 @@
 
 		      <form class="modal-footer" ng-submit="addReply(viewPost)"> 
 	      		<textarea class="form-control" rows="3" placeholder="Reply" ng-model="reply.content"></textarea> 
-		        <div class="col-xs-4 col-xs-offset-4">
 		          <button type="button" id="cancel-reply" ng-click="resetForm()" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		        </div>
-		        <div class="col-xs-4">
 		          <button type="submit" class="btn btn-primary">Post</button> 
-		        </div>
 		      </form>
 	      </div>
       </div> 
     </div>
     <!-- View Post Modal End-->
 
-    <!-- View Profile Modal Start -->
+    <!-- View Profile Modal -->
     <div class="modal fade" id="viewProfileModal" tabindex="-1" role="dialog" aria-labelledby="viewProfileModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content"> 
@@ -152,12 +145,10 @@
               <dd><span class="badge">{{ viewUser.replyCount }}</span></dd>
             </dl>
           </div>
-          <!-- modal-body end -->
         </div>
-        <!-- modal-content end -->
       </div>
-    <!-- modal-dialog end -->
     </div>
+    <!-- View Profil Modal End -->
 
     <!-- Button link for more posts -->
     <div class="row text-center">

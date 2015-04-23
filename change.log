@@ -1,0 +1,28 @@
+== 4-22-15 ==
++ Added Change.log!
++ Users can now request a temporary password if they lose/forget their own.
+~ Users can also change their password, on their profile page. (Soon...)
++ Users can now track how many posts and replies they've made.
+- Post/Reply counts are incremental only; deleting does NOT decrease the counts.
++ Posts now have individual reply counts.
+= New account registration moved to the landing page, as a modal
++ Minor bugfixes and code cleanup all around.
+
+
+
+== Initial (from readme.md) ==
++ Users can login with their email address and password
++ Users can post a link with a title to firebase
++ The navbar can be used to logout, and is ready to link to the user profile.
++ User posts work as intended.
++ User profiles are complete, except for user avatar uploading.
++ Replies work properly now.
+- Reply counts aren't working yet, but I think a filter MAY be the answer... 
++ Timestamp elements are now clickable, and work as a rudimentary search option.
++ Avatars are clickable, and load the user's profile. 
+- User profiles need to show the user's post count and reply count. 
+= The navbar will show any new comments left for a user. Not functional yet.
+= Also need to make the post queue service, and link to the 'more posts' button.
+= Also also need to condense post.content down to post.preview, to control the height of he container.
+= The back-end libraries are reorganized, and migrating away from the boilerplate.
+! Database and auth system were reset on April 8th! Please re-register your account.

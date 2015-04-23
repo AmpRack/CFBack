@@ -8,18 +8,18 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
 
   	$scope.editProfile = function() {
   		var newAvatar = document.getElementById('newAvatar');
-		var template = {
-			username: $scope.user.profile.username,
-			about: $scope.user.profile.about,
-			avatar: $scope.user.profile.avatar,
-			postCount: $scope.user.profile.postCount,
-			replyCount: $scope.user.profile.replyCount,
-			link: $scope.user.profile.link,
-			linkTitle: $scope.user.profile.linkTitle
-		};
+  		var template = {
+  			username: $scope.user.profile.username,
+  			about: $scope.user.profile.about,
+  			avatar: $scope.user.profile.avatar,
+  			postCount: $scope.user.profile.postCount,
+  			replyCount: $scope.user.profile.replyCount,
+  			link: $scope.user.profile.link,
+  			linkTitle: $scope.user.profile.linkTitle
+  		};
 
   		$('#editProfileModal').modal('hide');
-  		console.log('Updating profile...');
+  		
   		if (newAvatar.files[0]) {
   			imgur.upload(newAvatar.files[0]).then(function(model) {
   				console.log(model.link);
@@ -30,9 +30,7 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
   	};
 
   	$scope.deletePost = function(postId) {
-  		console.log('Deleting post...');
   		Post.deletePost(postId);
-  		Post.deleteReply(postId);
   		$route.reload();
   	};
 
@@ -40,8 +38,8 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
   	// Then retrieve posts and replies
   	$scope.getPostId = function(post) {
     	thisPostId = post.$id;
-    	$scope.viewPost = Post.getPost(post.$id);
-    	$scope.replies = Post.getReplies(post.$id);
+    	$scope.viewPost = Post.getPost(thisPostId);
+    	$scope.replies = Post.getReplies(thisPostId);
   	};
 
   	$scope.addReply = function() {
@@ -68,6 +66,12 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
   		// Using ng-imgur, get the user's file, upload, then return a string
   		// Send the string to editProfile... ? Or maybe just .$save() the profile.
   	};
+
+    $scope.changePass = function(){
+      // 4 inputs: User email, old pass, new pass1, new pass2
+      // First, check to make sure newPass1 === newPass2 (else throw error)
+      // Then, bundle the object and send to Auth.changePassword(creds)
+    };
 
 	$scope.logout = Auth.logout;
 });	
