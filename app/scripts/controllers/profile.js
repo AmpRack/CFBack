@@ -8,7 +8,7 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
 
   	$scope.editProfile = function() {
   		var newAvatar = document.getElementById('newAvatar');
-  		var template = {
+      var template = {
   			username: $scope.user.profile.username,
   			about: $scope.user.profile.about,
   			avatar: $scope.user.profile.avatar,
@@ -52,7 +52,6 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
 	    $scope.reply.parentId = thisPostId;
 	    $scope.reply.authorSeen = false;
 	    
-	    console.log('Adding reply...');
 	    $('#viewPostModal').modal('hide');
 	    Post.addReply($scope.reply, thisPostId).then(function() {
       		$scope.reply = {content: ''};
@@ -67,10 +66,23 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
   		// Send the string to editProfile... ? Or maybe just .$save() the profile.
   	};
 
-    $scope.changePass = function(){
-      // 4 inputs: User email, old pass, new pass1, new pass2
-      // First, check to make sure newPass1 === newPass2 (else throw error)
-      // Then, bundle the object and send to Auth.changePassword(creds)
+    $scope.changePass = function() {
+      if ($scope.newPass1 === $scope.newPass2) {
+        var userCreds = {
+          email: $scope.email,
+          oldPass: $scope.oldPass,
+          newPass: $scope.newPass2
+        };
+
+        $('#changePassModal').modal('hide');
+        Auth.changePassword(userCreds).then(function() {
+          userCreds = {};
+          console.log('Password change complete');
+        });
+      } else {
+        // Error handling
+      }
+
     };
 
 	$scope.logout = Auth.logout;

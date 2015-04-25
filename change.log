@@ -1,7 +1,9 @@
+== 4-25-15 == 
++ Users can now change their password (works, needs error handling)
+
 == 4-22-15 ==
 + Added Change.log!
 + Users can now request a temporary password if they lose/forget their own.
-~ Users can also change their password, on their profile page. (Soon...)
 + Users can now track how many posts and replies they've made.
 - Post/Reply counts are incremental only; deleting does NOT decrease the counts.
 + Posts now have individual reply counts.
