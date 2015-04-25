@@ -47,7 +47,8 @@
     <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true"> 
       <div class="modal-dialog"> 
         <form class="modal-content" ng-submit="submitPost()" ng-show="signedIn()"> 
-          <div class="modal-header"> 
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>  
             <h4 class="modal-title" id="newPostModalLabel">New Post</h4> 
           </div> 
           <div class="modal-body">
@@ -80,7 +81,8 @@
 		<div class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="viewPostModalLabel" aria-hidden="true"> 
       <div class="modal-dialog"> 
       	<div class="modal-content">
-		      <div class="modal-header"> 
+		      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"></span></button>  
 		      	<img ng-src="{{ viewPost.creatorAvatar }}" />
 		        <h4 class="modal-title" id="viewPostModalLabel">{{ viewPost.title }}</h4>
 		        <h4>

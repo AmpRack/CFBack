@@ -88,7 +88,7 @@ margin: 5px 0;
   line-height: 30px;
   margin-bottom: 15px;
   /*background-color: #fff; default styles */
-  border: 2px solid #ccc !important;  
+  border: 1px solid #ccc !important;  
   border-radius: 5px !important; 
 }
 
@@ -119,16 +119,20 @@ a:hover {
 .modal-header {
   padding-bottom: 0;
   border-bottom: 0;
+  text-align: center;
 }
 
-#registerModal input {
+#registerModal input, #resetPassModal input {
   display: inline-block;
-  width: 70%;
-  float: right;
+  border-radius: 5px !important;
+  margin-bottom: 15px !important;
+  padding: 20px 5px;
+  width: 100%;
   margin: 0;
 }
 
-#registerModal h4 {
+#registerModal h4, #resetPassModal h4 {
+  color: rgba(4, 147, 114, 1.0);
   display: inline-block;
 }
 
@@ -278,6 +282,7 @@ div.alert > span {
 
 /*-NEW POST MODAL-*/
 .modal-title {
+  color: rgba(4, 147, 114, 1.0);
   font-family: biko;
   font-size: 2em;
 }
@@ -383,7 +388,7 @@ div.alert > span {
   margin-bottom: 10px;
 }
   #viewPostModal .timestamp {
-    font-size: 18px;
+    font-size: 12px;
   }
 
 .post-main-reply {
@@ -449,7 +454,7 @@ div.alert > span {
 .profile-full-screen > img {
   height: 200px;
   width: 200px;
-  border-radius: 15%;
+  border-radius: 50%;
   position: relative;
   float: left;
   margin-right: 20px;
