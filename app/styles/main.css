@@ -431,10 +431,10 @@ div.alert > span {
 /*=============================
  PROFILE PAGE STYLINGS BEGIN
 ==============================*/
-#editButton, #passwordButton {
+#editButton, #passwordButton, #avatarButton {
   font-size: small;
 }
-  #editButton:hover, #passwordButton:hover {
+  #editButton:hover, #passwordButton:hover, #avatarButton:hover {
     cursor: pointer;
   }
 
@@ -542,7 +542,7 @@ div.alert > span {
   .profile-full-screen > .dl-horizontal dd {
     margin: 0;
   }
-  #editButton {
+  #editButton, #passwordButton, #avatarButton {
     font-size: xx-small;
   }
 }

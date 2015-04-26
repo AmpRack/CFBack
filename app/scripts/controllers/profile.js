@@ -4,29 +4,36 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
 	$scope.user = Auth.user;
 	var uid = $routeParams.userId;
 	var thisPostId = '';
+  var userAv = '';
 	$scope.posts = userPosts;
 
-  	$scope.editProfile = function() {
+    $scope.uploadAvatar = function() {
   		var newAvatar = document.getElementById('newAvatar');
-      var template = {
-  			username: $scope.user.profile.username,
-  			about: $scope.user.profile.about,
-  			avatar: $scope.user.profile.avatar,
-  			postCount: $scope.user.profile.postCount,
-  			replyCount: $scope.user.profile.replyCount,
-  			link: $scope.user.profile.link,
-  			linkTitle: $scope.user.profile.linkTitle
-  		};
+      if (newAvatar.files[0]) {
+        imgur.upload(newAvatar.files[0]).then(function(model) {
+          userAv = model.link;
+          console.log(userAv);
+          return Auth.updateAvatar(uid, userAv).then(function() {
+            $('#uploadAvatarModal').modal('hide');
+          });
+        });
+      }
+    };
 
-  		$('#editProfileModal').modal('hide');
-  		
-  		if (newAvatar.files[0]) {
-  			imgur.upload(newAvatar.files[0]).then(function(model) {
-  				console.log(model.link);
-  			});
-  		}
-  		// Get imgur api key! 
-  		return Auth.updateProfile(uid, template);
+    $scope.editProfile = function() {
+      var template = {
+        username: $scope.user.profile.username,
+        about: $scope.user.profile.about,
+        avatar: $scope.user.profile.avatar,
+        postCount: $scope.user.profile.postCount,
+        replyCount: $scope.user.profile.replyCount,
+        link: $scope.user.profile.link,
+        linkTitle: $scope.user.profile.linkTitle
+      };
+
+      return Auth.updateProfile(uid, template).then(function() {
+        $('#editProfileModal').modal('hide');
+      });
   	};
 
   	$scope.deletePost = function(postId) {
@@ -59,11 +66,6 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
       		$scope.viewPost = {};
       		$route.reload();
       	});
-  	};
-
-  	$scope.uploadAvatar = function(){
-  		// Using ng-imgur, get the user's file, upload, then return a string
-  		// Send the string to editProfile... ? Or maybe just .$save() the profile.
   	};
 
     $scope.changePass = function() {

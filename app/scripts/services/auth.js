@@ -47,6 +47,14 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 	  	return profileRef.$set(uid, newInfo);
 	  },
 
+	  updateAvatar: function(uid, imageLink) {
+	  	console.log('Updating avatar...');
+	  	return $firebase(ref.child('profile').child(uid)).$asObject().$loaded().then(function(thisUser) {
+	  		thisUser.avatar = imageLink;
+	  		return thisUser.$save();
+	  	});
+	  },
+
 	  resetPassword: function(email) {
 	  	console.log('Requesting new password email...');
 	  	return auth.$sendPasswordResetEmail(email);

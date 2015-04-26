@@ -1,5 +1,5 @@
 <h2>Codify_Forum</h2>
-<hr/>
+<hr/> 
 <p>Node.js, Bower, and Grunt are required. To use, decompress libraries.rar, and add the included /app/ folder. If you registered an account before April 8th, make sure you re-register your account. 
 
 First, a quick rundown of each folder.</p>
