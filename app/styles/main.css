@@ -342,16 +342,10 @@ div.alert > span {
 }
 
 .view-post {
-    border: 1px solid rgba(0,0,0,0);
-    background-color: rgba(4, 147, 114, 1.0);
-    color: #fff;
+    color: #D2D7D3;
     padding: 14px 16px;
-    border-radius: 50%;
 }
 
-.view-post:hover {
-  border: 1px solid grey;
-}
 .post-main > ul > li > a > span.badge {
 	background-color: #D2D7D3;
 }
