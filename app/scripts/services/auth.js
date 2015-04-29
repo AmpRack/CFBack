@@ -4,28 +4,12 @@
 app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $firebase, $location) {
 	var ref = new Firebase(FIREBASE_URL);	// Access the firebase url
 	var auth = $firebaseSimpleLogin(ref);	// Access the firebase login service
-	var profileRef = $firebase(ref.child('profile'));
-	var defaultAvatar = 'http://i.imgur.com/QGpIArR.jpg'; // Default user avatar
 
 	var Auth = {
 		register: function (user) {
 			return auth.$createUser(user.email, user.password);
 		},
 
-		createProfile: function (user) {
-			var profile = {
-				username: user.username,										// User displayed name
-				about: 'I\'m a student at Codify Academy!',	// User bio
-				avatar: defaultAvatar,
-				postCount: 0,																// Number of posts made
-				replyCount: 0,															// Number of replies made
-				link: 'http://www.codifyacademy.com',				// User personal link
-				linkTitle: 'Codify Academy Homepage'				// Personal link description
-			};
-			console.log('Creating new user...');	
-			return profileRef.$set(user.uid, profile);
-		},
-		
 		login: function (user) {
 			return auth.$login('password', user);
 		},
@@ -38,32 +22,19 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 			return auth.$getCurrentUser();
 		},
 	  
-	  signedIn: function() {
-	   	return !!Auth.user.provider;
-	  },
+		signedIn: function() {
+	   		return !!Auth.user.provider;
+	  	},
 	  
-	  updateProfile: function(uid, newInfo) {
-	  	console.log('Updating profile...');
-	  	return profileRef.$set(uid, newInfo);
-	  },
+		resetPassword: function(email) {
+			console.log('Requesting new password email...');
+			return auth.$sendPasswordResetEmail(email);
+		},
 
-	  updateAvatar: function(uid, imageLink) {
-	  	console.log('Updating avatar...');
-	  	return $firebase(ref.child('profile').child(uid)).$asObject().$loaded().then(function(thisUser) {
-	  		thisUser.avatar = imageLink;
-	  		return thisUser.$save();
-	  	});
-	  },
-
-	  resetPassword: function(email) {
-	  	console.log('Requesting new password email...');
-	  	return auth.$sendPasswordResetEmail(email);
-	  },
-
-	  changePassword: function(creds) {
-	  	console.log('Changing password');
-	  	return auth.$changePassword(creds.email, creds.oldPass, creds.newPass);
-	  },
+		changePassword: function(creds) {
+			console.log('Changing password');
+			return auth.$changePassword(creds.email, creds.oldPass, creds.newPass);
+		},
 		
 		user: {}
 	};

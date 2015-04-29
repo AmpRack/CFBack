@@ -10,6 +10,7 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
 
     // Add the post the firebase first, then increment user.postCount
     addPost: function (post) {
+      console.log('Adding post...');
       return posts.$add(post).then(function(){
         return $firebase(ref.child('profile').child(post.creatorUID)).$asObject().$loaded().then(function(thisUser) {
           thisUser.postCount += 1;
@@ -20,10 +21,11 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
 
     // Add the reply to firebase first, then increment the replyCount for the post and user.
     addReply: function (reply) {
+      console.log('Adding reply...');
       return $firebase(ref.child('replies').child(reply.parentId)).$push(reply).then(function(){
         return $firebase(ref.child('posts').child(reply.parentId)).$asObject().$loaded().then(function(thisPost) {
           thisPost.replyCount += 1;
-          return thisPost.$save();
+          //return thisPost.$save();
         }).then(function() {
           return $firebase(ref.child('profile').child(reply.creatorUID)).$asObject().$loaded().then(function(thisUser) {
             thisUser.replyCount += 1;
@@ -63,7 +65,7 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
     },
 
     replyCount: function (postId) {
-      return $firebase(ref.child('posts').child(postId)).$asObject().replyCount;
+      //return $firebase(ref.child('replies').child(postId)).numChildren();
     },
     
     // Get each post, break the content and title into an array, then check each word against the searchTerm

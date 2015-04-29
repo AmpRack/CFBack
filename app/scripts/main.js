@@ -1,42 +1,5 @@
 'use strict';
 
-// Format raw time units to ##:## ##/##/##
-function scrubTime(unit) {
-	// For years, we only need the last 2 digits
-	if (unit > 2000) {
-		unit -= 2000;
-	}
-	if (unit < 10) {
-		unit = ('0' + unit.toString());
-	}
-	return unit.toString();
-}
-
-// Returns date and time as separate, semantic strings
-function timeStamp() {
-  var currentTime = new Date();
-  var hrs  = currentTime.getHours();
-  var mins = scrubTime(currentTime.getMinutes());
-  var day  = scrubTime(currentTime.getDate());
-  var mon  = scrubTime(currentTime.getMonth() + 1);
-  var year = scrubTime(currentTime.getFullYear());
-  var ampm = '';
-  // Use hrs to find the meridian (am/pm) before scrubbing
-  if (hrs === 0) {
-    hrs = '12';
-    ampm = 'AM';
-  } else if (hrs > 12) {
-    hrs = scrubTime(hrs - 12);
-    ampm = 'PM';
-  } else {
-    hrs = scrubTime(hrs);
-    ampm = 'AM';
-  }
-  var postTime = hrs + ':' + mins + ampm;
-  var postDate = mon + '/' + day + '/' + year;
-  return [postTime, postDate];
-}
-
 $(document).ready(function() {
 
 	// Toggle focus style on searchbar in main page

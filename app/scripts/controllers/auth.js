@@ -2,7 +2,7 @@
 
 /* The Auth controller handles the login / logout buttons,
 passing the credentials to the auth service to be worked out */
-app.controller('AuthCtrl', function ($scope, $location, Auth, user) {
+app.controller('AuthCtrl', function ($scope, $location, Auth, user, Profile) {
 	// If we're loggedin, just go to the main page
 	if (user) {
 		$location.path('/main');
@@ -22,7 +22,7 @@ app.controller('AuthCtrl', function ($scope, $location, Auth, user) {
 		Auth.register($scope.user).then(function(user) {
 			return Auth.login($scope.user).then(function(){ 
 				user.username = $scope.user.username;
-				return Auth.createProfile(user);
+				return Profile.create(user);
 			}).then(function(){
 				$location.path('/main');
 			});

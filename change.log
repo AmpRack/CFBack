@@ -1,5 +1,15 @@
+== 4-28-15 ==
++ Post service now refers to user profiles for info, instead of attaching it to every post.
++ Reply methods are slightly more separate from Post methods, for better control
++ Fixed several profile bugs, regarding multiple user handling
++ Posts and replies now carry less data, in general
+- Reply counting is getting a new method, but isn't working right yet. 
+? Firebase rules are working properly, but may need a once-over.
+
+
 == 4-25-15 ==  
 + Users can now change their password (works, needs error handling)
++ Users can also upload pictures to their profile
 
 == 4-22-15 ==
 + Added Change.log!

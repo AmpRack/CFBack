@@ -17,18 +17,15 @@ First, a quick rundown of each folder.</p>
  
  
  <h2>To-Do List</h2>
- <p>See change.log for recent changes! (Last updated 4-22-15)</p>
+ <p>See change.log for recent changes! (Last updated 4-29-15)</p>
  <ul>
  <li><b>Login</b> - Need to style error messages (#error p) </li>
  <li><b>Nav</b> - New comment notifier needs to work. </li>
  <li><b>Nav</b> - While the function is built, the search needs to be hooked up.</li>
  <li><b>Main</b> - Reply count needs to be incorporated properly.</li>
  <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
- <li><b>Main</b> - The post service needs to be rewritten. User info shouldn't be attached directly to posts. UIDs should attach to post, then pull info from $firebase.profile.uid to put user info into the posts.</li>
  <li><b>Profile</b> - 'Change password' function needs error handling.
- <li><b>Profile</b> - Imgur module seems to be working, but there's 403 on upload... </li>
  <li><b>Profile</b> - Maybe take 'Upload avatar' 'edit profile' and 'change password' and consolidate that to a single menu?</li>
- <li><b>Profile</b> - Similarly, 'Upload Avatar' needs a modal built for it.</li>
  <li><b>Misc</b> - Rename app from 'Codify' to 'Conclave' (requires libraries recompile)</li>
  </ul>
  
