@@ -1,7 +1,5 @@
 'use strict';
 
-/* The Auth controller handles the login / logout buttons,
-passing the credentials to the auth service to be worked out */
 app.controller('AuthCtrl', function ($scope, $location, Auth, user, Profile) {
 	// If we're loggedin, just go to the main page
 	if (user) {

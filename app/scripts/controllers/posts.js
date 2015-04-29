@@ -52,29 +52,27 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
     return copy.reverse();
   };
 
+  // Attach profile data to posts
   $scope.attachProfile = function(userId) {
     return Profile.get(userId);
   };
 
+  // Send a user's profile to the profile modal
   $scope.loadProfile = function(user) {
     $scope.viewProfile = user;
   };
 
-  $scope.loadPost = function(post) {
-    $scope.thisUser = $scope.attachProfile(post.creatorUID);
-    $scope.replyCount = Post.replyCount(post.$id);
-  };
-
+  // Fetch posts that match a given key/value pair
   $scope.getPosts = function(key, value) {
     $scope.posts = Post.getPostsBy(key, value);
   };
 
+  // Fetch reply count for a given post
   $scope.replyCount = function(postId) {
-    Post.replyCount(postId);
-    //$scope.thisCount = Post.replyCount(postId);
+    return Post.replyCount(postId);
   };
   
-  // Build the rest of post here, then send the object to the Post Service
+  // Build the post here, then send the object to the Post Service
   $scope.submitPost = function() {
     var thisTime = timeStamp();
     $scope.post.postTime = thisTime[0];
@@ -89,18 +87,17 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
     }*/
     Post.addPost($scope.post).then(function () {
       $('#newPostModal').modal('hide');
-      //$route.reload();
     });
   };
 
-  // Broadcasts the postId to the scope, so replies match up to posts
+  // When viewing a post, load these things
   $scope.loadReplies = function(post) {
-    $scope.viewPost = Post.getPost(post.$id);
+    $scope.viewPost = post;
     $scope.replies = Post.getReplies(post.$id);
     $scope.author = Profile.get(post.creatorUID);
   };
 
-
+  // Build the reply here before sending it to the Post Service
   $scope.addReply = function(postId) {
     var thisTime = timeStamp();
     $scope.reply.postTime = thisTime[0];
@@ -114,14 +111,9 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
     });
   };
 
+  // Reset form data after submission
   $scope.resetForm = function() {
-    $scope.post = {
-      title: '',
-      keyword: '',
-      content: ''
-    };
-    $scope.reply = {
-      content: ''
-    };
+    $scope.post = { title: '', keyword: '', content: '' };
+    $scope.reply = { content: '' };
   };
 });

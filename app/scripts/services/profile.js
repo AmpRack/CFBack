@@ -6,7 +6,8 @@ app.factory('Profile', function (FIREBASE_URL, $firebase) {
 	var profileRef = $firebase(ref.child('profile'));
 
 	var Profile = {
-		create: function (user) { // Create a new user profile
+		// Create a new user profile object
+		create: function (user) {
 			var profile = {
 				username: user.username,										// User displayed name
 				about: 'I\'m a student at Codify Academy!',	// User bio
@@ -21,17 +22,20 @@ app.factory('Profile', function (FIREBASE_URL, $firebase) {
 			});
 		},
 
-		get: function (userId) { // Load the user profile
+		// Load the user profile
+		get: function (userId) {
 			return $firebase(ref.child('profile').child(userId)).$asObject();
 		},
 
-		update: function(uid, newInfo) { // Update profile after user editing
+		// Update profile after user editing
+		update: function(uid, newInfo) { 
 			return profileRef.$set(uid, newInfo).then(function(){
 				console.log('Profile updated.');
 			});
 		},
 
-		setAvatar: function(uid, imageLink) { // Update a user's profile picture
+		// Update a user's profile picture
+		setAvatar: function(uid, imageLink) { 
 			return $firebase(ref.child('profile').child(uid)).$asObject().$loaded().then(function(thisUser) {
 				thisUser.avatar = imageLink;
 				return thisUser.$save().then(function(){
@@ -40,7 +44,8 @@ app.factory('Profile', function (FIREBASE_URL, $firebase) {
 			});
 		},
 
-		userPosts: function(userId) { // Retrieve your own posts
+		// Retrieve your own posts
+		userPosts: function(userId) { 
 			return $firebase(ref.child('posts')).$asArray().$loaded().then(function(posts){
 			var output = [];
 			for (var i = 0; i < posts.length; i++) {

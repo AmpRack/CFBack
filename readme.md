@@ -22,10 +22,9 @@ First, a quick rundown of each folder.</p>
  <li><b>Login</b> - Need to style error messages (#error p) </li>
  <li><b>Nav</b> - New comment notifier needs to work. </li>
  <li><b>Nav</b> - While the function is built, the search needs to be hooked up.</li>
- <li><b>Main</b> - Reply count needs to be incorporated properly.</li>
+ <li><b>Main</b> - Reply count needs to be fixed, incorporated properly.</li>
  <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
  <li><b>Profile</b> - 'Change password' function needs error handling.
  <li><b>Profile</b> - Maybe take 'Upload avatar' 'edit profile' and 'change password' and consolidate that to a single menu?</li>
- <li><b>Misc</b> - Rename app from 'Codify' to 'Conclave' (requires libraries recompile)</li>
  </ul>
  

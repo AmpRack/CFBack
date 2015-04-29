@@ -3,9 +3,9 @@
 
 /**
  * @ngdoc overview
- * @name angNewsApp
+ * @name conclaveApp
  * @description
- * # CodifyApp
+ * # ConclaveApp
  *
  * Main module of the application.
  */
@@ -13,7 +13,7 @@
 'use strict';
 
 var app = angular
-  .module('CodifyApp', [
+  .module('ConclaveApp', [
     'ngAnimate', 'ngCookies' , 'ngResource',
     'ngRoute'  , 'ngSanitize', 'ngTouch'   ,
     'ngImgur'  , 'firebase'
@@ -39,15 +39,6 @@ var app = angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/login.html',
-        controller: 'AuthCtrl',
-        resolve: {
-          user: function(Auth) {
-            return Auth.resolveUser();
-          }
-        }
-      })
-      .when('/register', {
-        templateUrl: 'views/register.html',
         controller: 'AuthCtrl',
         resolve: {
           user: function(Auth) {

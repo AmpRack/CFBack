@@ -5,16 +5,17 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
   var uid = $routeParams.userId;
   $scope.posts = userPosts;
 
+  // Attach profile data to individual posts
   $scope.attachProfile = function(userId) {
     return Profile.get(userId);
   };
 
+  // Upload an image to imgur, return the link, then add it to the user's profile
   $scope.uploadAvatar = function() {
     var newAvatar = document.getElementById('newAvatar');
     if (newAvatar.files[0]) {
       imgur.upload(newAvatar.files[0]).then(function(model) {
         var userAv = model.link;
-        console.log(userAv);
         return Profile.setAvatar(uid, userAv).then(function() {
           $('#uploadAvatarModal').modal('hide');
         });
@@ -22,6 +23,7 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
     }
   };
 
+  // Build the entire profile here, then send to Profile Service
   $scope.editProfile = function() {
     var template = {
       username: $scope.user.profile.username,
@@ -38,43 +40,38 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
     });
   };
 
+  // Delete an individual post
   $scope.deletePost = function(postId) {
     Post.deletePost(postId);
     $route.reload();
   };
 
-  // Broadcasts the postId to the scope, so replies match up to posts,
-  // Then retrieve posts and replies
-  $scope.loadPost = function(post) {
-    $scope.thisUser = $scope.attachProfile(post.creatorUID);
-    $scope.replyCount = Post.replyCount(post.$id);
-  };
-
+  // When viewing a post, get these things ready
   $scope.loadReplies = function(post) {
     $scope.viewPost = Post.getPost(post.$id);
     $scope.replies = Post.getReplies(post.$id);
     $scope.author = Profile.get(post.creatorUID);
   };
 
-  $scope.addReply = function() {
+  // Build the reply here first, then send to Post Service
+  $scope.addReply = function(postId) {
     var thisTime = timeStamp();
     $scope.reply.postTime = thisTime[0];
     $scope.reply.postDate = thisTime[1];
     $scope.reply.creator = $scope.user.profile.username;
     $scope.reply.creatorUID = $scope.user.uid;
     $scope.reply.creatorAvatar = $scope.user.profile.avatar;
-    $scope.reply.parentId = thisPostId;
+    $scope.reply.parentId = postId;
     $scope.reply.authorSeen = false;
     
     $('#viewPostModal').modal('hide');
-    Post.addReply($scope.reply, thisPostId).then(function() {
-        $scope.reply = {content: ''};
-        thisPostId = '';
-        $scope.viewPost = {};
-        $route.reload();
-      });
+    Post.addReply($scope.reply, postId).then(function() {
+      $scope.reply = {content: ''};
+      $scope.viewPost = {};
+    });
   };
 
+  // Verify the new password is typed correct, then send to Auth service
   $scope.changePass = function() {
     if ($scope.newPass1 === $scope.newPass2) {
       var userCreds = {
@@ -89,7 +86,7 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
         console.log('Password change complete');
       });
     } else {
-      // Error handling
+      // Error handling goes here!
     }
 
   };

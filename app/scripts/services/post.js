@@ -46,10 +46,12 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       });
     },
 
+    // Get one specific post
     getPost: function (postId) {
       return $firebase(ref.child('posts').child(postId)).$asObject();
     },
 
+    // Get posts that match a given key/value pair
     getPostsBy: function (key, value) {
       var output = [];
       for (var i = 0; i < posts.length; i++) {
@@ -60,10 +62,12 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
       return output;
     },
 
+    // Load replies for a given post
     getReplies: function (postId) {
       return $firebase(ref.child('replies').child(postId)).$asArray();
     },
 
+    // Count the number of replies for a given post, but disabled/broken
     replyCount: function (postId) {
       //return $firebase(ref.child('replies').child(postId)).numChildren();
     },

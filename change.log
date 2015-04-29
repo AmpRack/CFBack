@@ -1,3 +1,8 @@
+== 4-29-15 ==
++ Libraries updated to include imgur api settings and new app name (Conclave)
++ Lots of code cleanup from the last update
++ Bugfixes to profile controller
+
 == 4-28-15 ==
 + Post service now refers to user profiles for info, instead of attaching it to every post.
 + Reply methods are slightly more separate from Post methods, for better control
