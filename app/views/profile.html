@@ -17,8 +17,6 @@
           <!--EDIT PROFILE w/ modal HTML BUTTON TRIGGER-->
           <dt>
             <a id="editButton" data-toggle="modal" ng-hide="signedIn()" data-target="#editProfileModal">Edit Profile</a>
-            <a id="passwordButton" data-toggle="modal" ng-hide="signedIn()" data-target="#changePassModal">Change Password</a>
-            <a id="avatarButton" data-toggle="modal" ng-hide="signedIn()" data-target="#uploadAvatarModal">Upload Avatar</a>
           </dt>
         </dl>
       </div>
@@ -114,6 +112,9 @@
                 <!-- Add hidden div that on hover will show caption 
                     "edit picture" -->
                 <img ng-src="{{ user.profile.avatar }}" style="height:100px;width:100px;border-radius:50%;">
+                <dt>
+                <a id="avatarButton" data-toggle="modal" ng-hide="signedIn()" data-target="#uploadAvatarModal">Upload Avatar</a>
+                </dt>
               </div>
               <div class="col-xs-9">
                 <input type="text" class="form-control" ng-model="user.profile.username" placeholder="{{ user.profile.username }}" />
@@ -125,7 +126,8 @@
             <textarea class="form-control" rows="5" ng-model="user.profile.about" placeholder="About Me"></textarea>
           </div>
 
-          <div class="modal-footer"> 
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default"data-toggle="modal" style="color:white" ng-hide="signedIn()" data-target="#changePassModal">Change Password</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button type="submit" class="btn btn-primary">Save</button>
           </div>             
