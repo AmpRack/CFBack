@@ -4,6 +4,7 @@
 app.factory('Profile', function (FIREBASE_URL, $firebase) {
 	var ref = new Firebase(FIREBASE_URL);
 	var profileRef = $firebase(ref.child('profile'));
+	var replyRef = $firebase(ref.child('replies'));
 
 	var Profile = {
 		// Create a new user profile object
