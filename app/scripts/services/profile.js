@@ -55,6 +55,18 @@ app.factory('Profile', function (FIREBASE_URL, $firebase) {
       	}
       return output;
 			});
+		},
+
+		checkReplies: function(userId) {
+			return Profile.userPosts(userId).then(function(posts){
+				var output = [];
+				for (var i = 0; i < posts.length; i++) {
+					if (!posts[i].authorSeen) {
+						output.push(posts[i]);
+						// Pick up here!
+					}
+				}
+			});
 		}
 	};
 

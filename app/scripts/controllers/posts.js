@@ -52,10 +52,7 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
     return copy.reverse();
   };
 
-  // Attach profile data to posts
-  $scope.attachProfile = function(userId) {
-    return Profile.get(userId);
-  };
+
 
   // Send a user's profile to the profile modal
   $scope.loadProfile = function(user) {
@@ -67,9 +64,10 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
     $scope.posts = Post.getPostsBy(key, value);
   };
 
-  // Fetch reply count for a given post
-  $scope.replyCount = function(postId) {
-    return Post.replyCount(postId);
+  $scope.initPost = function(post) {
+    post.thisUser = Profile.get(post.creatorUID);
+    post.thisReplyCount = Post.replyCount(post.$id);
+//    return post;
   };
   
   // Build the post here, then send the object to the Post Service

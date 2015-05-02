@@ -4,6 +4,7 @@
 app.factory('Post', function ($firebase, FIREBASE_URL) {
 	var ref = new Firebase(FIREBASE_URL);
 	var posts = $firebase(ref.child('posts')).$asArray();
+  var replyRef = $firebase(ref.child('replies'));
 
   var Post = {
     all: posts,
@@ -69,7 +70,10 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
 
     // Count the number of replies for a given post, but disabled/broken
     replyCount: function (postId) {
-      //return $firebase(ref.child('replies').child(postId)).numChildren();
+      return $firebase(ref.child('replies').child(postId)).$asArray().$loaded().then(function(replies){
+        return replies.length;
+      });
+      
     },
     
     // Get each post, break the content and title into an array, then check each word against the searchTerm

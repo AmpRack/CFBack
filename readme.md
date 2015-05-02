@@ -19,12 +19,11 @@ First, a quick rundown of each folder.</p>
  <h2>To-Do List</h2>
  <p>See change.log for recent changes! (Last updated 4-29-15)</p>
  <ul>
- <li><b>Login</b> - Need to style error messages (#error p) </li>
- <li><b>Nav</b> - New comment notifier needs to work. </li>
- <li><b>Nav</b> - While the function is built, the search needs to be hooked up.</li>
- <li><b>Main</b> - Reply count needs to be fixed, incorporated properly.</li>
- <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
- <li><b>Profile</b> - 'Change password' function needs error handling.
- <li><del><b>Profile</b> - Maybe take 'Upload avatar' 'edit profile' and 'change password' and consolidate that to a single menu?</del>(updated 4/29: <em>moved to edit profile module</em>)</li>
+  <li><b>Login</b> - Need to style error messages (#error p) </li>
+  <li><b>Nav</b> - New comment notifier needs to work. </li>
+  <li><b>Nav</b> - While a search function is built (untested), the search needs to be hooked up.</li>
+  <li><b>Main</b> - Reply count needs to be fixed, incorporated properly.</li>
+  <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
+  <li><b>Profile</b> - 'Change password' function needs error handling.</li>
  </ul>
  

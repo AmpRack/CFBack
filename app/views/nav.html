@@ -28,10 +28,10 @@
           </form>
         </li>
         <!-- Info alert for new comments toggle hidden class to dismiss -->
-        <li class="hidden-xs">
+        <li class="hidden-xs" ng-show="hasReplies()">
           <a id="reply-alert">
             <div class="alert alert-info alert-dismissible" role="alert">
-              new comments: <span>0</span>
+              <span>You have unread replies!</span>
             </div>
           </a>                
         </li>

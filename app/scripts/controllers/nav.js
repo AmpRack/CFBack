@@ -6,7 +6,7 @@ app.controller('NavCtrl', function ($scope, $routeParams, Auth) {
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.user = Auth.user;
-  $scope.newReplies = 0;
+  $scope.newReplies = 1;
 
   // Return true if there are any new replies to any of your posts
   $scope.hasReplies = function() {

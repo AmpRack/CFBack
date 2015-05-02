@@ -13,25 +13,25 @@
 
 
     <!-- Individual Post Template -->
-    <div class="post-template" ng-repeat="post in reverse(posts)" ng-init="thisUser = attachProfile(post.creatorUID)">
+    <div class="post-template" ng-repeat="post in reverse(posts)" ng-init="initPost(post)">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="loadProfile(thisUser)">
-            <img ng-src="{{ thisUser.avatar }}" class="post-avatar" />
+          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="loadProfile(post.thisUser)">
+            <img ng-src="{{ post.thisUser.avatar }}" class="post-avatar" />
           </a>
           <ul class="list-group">
             <li class="list-group-item"style="margin:0 0 15px 0;">
               <i class="view-post fa fa-plus" data-toggle="modal" data-target="#viewPostModal" ng-click="loadReplies(post)"></i>
             </li>
             <li class="list-group-item"style="color:#D2D7D3">
-              <p>{{ replyCount(post.$id) }}</p> <!-- Testing Purposes Only! -->
+              <p>{{ post.thisReplyCount }}</p> <!-- Testing Purposes Only! -->
             </li>
           </ul>
 
           <h5>
             <span class="post-title">{{ post.title }}</span><br />
             <span class="timestamp">
-              <a ng-click="getPosts('creatorUID', post.creatorUID)">{{ thisUser.username }}</a> - 
+              <a ng-click="getPosts('creatorUID', post.creatorUID)">{{ post.thisUser.username }}</a> - 
               <a ng-click="getPosts('postDate', post.postDate)">{{ post.postTime }} {{ post.postDate }}</a> - 
               <a ng-click="getPosts('keyword', post.keyword)">{{ post.keyword }}</a>
             </span>
@@ -96,12 +96,12 @@
 		        	<h4>{{ viewPost.content }}</h4>
 		        </div>
 
-		        <div class="post-template" ng-repeat="reply in replies" ng-init="thisUser = attachProfile(reply.creatorUID)">
+		        <div class="post-template" ng-repeat="reply in replies" ng-init="initPost(reply)">
 		        	<div class="row">
 		        		<div class="background-white post-main">
-                  <img ng-src="{{ thisUser.avatar }}" /> 
+                  <img ng-src="{{ reply.thisUser.avatar }}" /> 
 				          <h5><span class="timestamp">
-              			{{ thisUser.username }} - 
+              			{{ reply.thisUser.username }} - 
               			{{ reply.postTime }} {{ reply.postDate }}
             			</span></h5>
           				<p>{{ reply.content }}</p>
