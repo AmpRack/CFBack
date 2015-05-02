@@ -28,7 +28,7 @@
   </form>
   <!-- Form End -->
 
-  <div class="row smaller-top-bottom-margin">
+  <div class="row">
     <div class="col-md-2 col-md-offset-5">
       <button type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#registerModal" >Sign-Up</button> 
     </div>
@@ -36,7 +36,7 @@
   <!-- Buttons End -->
   
   <div class="row text-center smaller-top-bottom-margin">
-    <a data-toggle="modal" data-target="#resetPassModal">I forgot my password</a>
+    <a data-toggle="modal" data-target="#resetPassModal">Forgot Password?</a>
   </div>
   <!-- Signin End -->
 
@@ -73,9 +73,9 @@
 
       <div class="modal-body">
         <p id="error" ng-show="error" class="text-danger">{{ error }}</p>
-        <h4>Email: </h4><input type="email" ng-model="user.email" placeholder="Email" class="form-control" /><br/>
-        <h4>Display Name: </h4><input type="text" ng-model="user.username" placeholder="Username" class="form-control" /><br>
-        <h4>Password: </h4><input type="password" ng-model="user.password" placeholder="Password" class="form-control" /><br/>
+        <input type="email" ng-model="user.email" placeholder="Email" class="form-control" /><br/>
+        <input type="text" ng-model="user.username" placeholder="Username" class="form-control" /><br>
+        <input type="password" ng-model="user.password" placeholder="Password" class="form-control" /><br/>
       </div> 
       
       <div class="modal-footer"> 
