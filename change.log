@@ -1,3 +1,10 @@
+== 5-02-15 ==
+! New branch 'fb-update' created.
+! Firebase has been updated from 1.6.3 to 2.2.4. AngularFire updated from 0.8.2 to 1.0.0.
+? Lot of changes to the Firebase api, which means a lot of rewriting. Every file needs to be checked, tested, and fixed. 
++ Login, Registration, Logout, and some posting functions work properly.
+
+
 == 4-29-15 ==
 + Libraries updated to include imgur api settings and new app name (Conclave)
 + Lots of code cleanup from the last update
