@@ -1,9 +1,10 @@
 'use strict';
 
-app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post, Profile, userPosts, imgur) {
+app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post, Profile, userPosts, imgur, Search) {
   $scope.user = Auth.user;
   var uid = $routeParams.userId;
   $scope.posts = userPosts;
+  $scope.search = Search;
 
   // Attach profile data to individual posts
   $scope.attachProfile = function(userId) {

@@ -38,14 +38,15 @@ function timeStamp() {
 }
 
 // PostsCtrl handles posts, replies, and helps link profile data to posts.
-app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile) {
+app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile, Search) {
   $scope.user = Auth.user;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
   $scope.posts = Post.all;
   $scope.post = { title: '', keyword: '', content: '' };
   $scope.reply = { content: '' };
-
+  $scope.search = Search;
+  
   // Necessary to sort posts from newest to oldest
   $scope.reverse = function(array) {
     var copy = [].concat(array);

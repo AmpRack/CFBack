@@ -24,7 +24,7 @@
     <!-- User Information Header END -->
 
     <!-- Individual Post Template -->
-    <div class="post-template" ng-repeat="post in posts" ng-init="thisUser = attachProfile(post.creatorUID)">
+    <div class="post-template" ng-repeat="post in posts | filter: search.searchPosts" ng-init="thisUser = attachProfile(post.creatorUID)">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 background-white post-main">
           <img ng-src="{{ thisUser.avatar }}" class="post-avatar" />
@@ -152,10 +152,10 @@
               <div class="col-md-12">
                 <h4>Please fill out this form to change your password. </h4>
                 <p id="error" ng-show="error" class="text-danger">{{ error }}</p>
-                <input type="email" class="form-control" ng-model="email" placeholder="Email Address" />
-                <input type="password" class="form-control" ng-model="oldPass" placeholder="Old Password" />
-                <input type="password" class="form-control" ng-model="newPass1" placeholder="New Password" />
-                <input type="password" class="form-control" ng-model="newPass2" placeholder="Retype New Password" />
+                <input type="email" class="form-control" ng-model="email" placeholder="Email Address" required/>
+                <input type="password" class="form-control" ng-model="oldPass" placeholder="Old Password" required/>
+                <input type="password" class="form-control" ng-model="newPass1" placeholder="New Password" required/>
+                <input type="password" class="form-control" ng-model="newPass2" placeholder="Retype New Password" required/>
               </div>
             </div>
           </div>

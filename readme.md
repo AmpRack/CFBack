@@ -20,8 +20,6 @@ First, a quick rundown of each folder.</p>
  <p>See change.log for recent changes! (Last updated 4-29-15)</p>
  <ul>
   <li><b>Nav</b> - New comment notifier needs to work. </li>
-  <li><b>Nav</b> - While a search function is built (untested), the search needs to be hooked up.</li>
   <li><b>Main</b> - Reply count needs to be fixed, incorporated properly.</li>
   <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
-  <li><b>Profile</b> - 'Change password' function needs error handling.</li>
  </ul>
