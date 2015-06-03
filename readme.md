@@ -1,25 +1,23 @@
-<h2>Codify_Forum</h2>
+<h2>Conclave - A collaborative social network</h2>
 <hr/>
-<p>Node.js, Bower, and Grunt are required. To use, decompress libraries.rar, and add the included /app/ folder. If you registered an account before April 8th, make sure you re-register your account.
+<p>To use, just clone this repo, decompress node_modules.rar into it's own folder (where necessary). Everything is ready to go, out of the box!</p>
+<p>See change.log for recent changes! (Last updated 06-03-15)</p>
 
-First, a quick rundown of each folder.</p>
+<p>Here's a brief overview of each folder.</p>
 
 <p>
- <b>bower_components/</b>     -   Holds all of the angular.js files, bootstrap, jquery, etc<br/>
- <b>node_modules/</b>         -   Grunt server files, VERY useful for testing<br/>
+ <b>app/</b>                  -   Most of the folders here are self explanatory<br/>
+ <b>bower_components/</b>     -   Holds all of the angularjs files, bootstrap, jquery, etc<br/>
+ <b>node_modules/</b>         -   Mostly grunt plugins and testing libraries, from node.js<br/>
  <b>test/</b>                 -   For running spec tests<br/>
- <b>app/</b>                  -   The website itself. Most of the folders here are self explanatory.<br/>
- <b>app/views/</b>            -   The html template pages, to be injected into index.html<br/>
- <b>scripts/app.js</b>        -   The master controller, connects views to controllers<br/>
- <b>scripts/controllers</b>   -   Controllers inject data to the html, by way of ng-properties<br/>
+ <b>scripts/controllers</b>   -   Controllers inject data to the html, by way of ng-directives<br/>
  <b>scripts/services</b>      -   Services connect to firebase, and transfers data<br/>
- <b>scripts/filters</b>       -   Useful for any last-minute changes, post-processing<br/></p>
+ <b>scripts/filters</b>       -   Useful for any last-minute changes, post-processing<br/>
+</p>
 
-
- <h2>To-Do List</h2>
- <p>See change.log for recent changes! (Last updated 4-29-15)</p>
- <ul>
-  <li><b>Nav</b> - New comment notifier needs to work. </li>
-  <li><b>Main</b> - Reply count needs to be fixed, incorporated properly.</li>
-  <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
- </ul>
+<h2>Upcoming features</h2>
+<ul>
+ <li><b>Main</b> - Post Queue needs to be built, to control how many posts per page.</li>
+ <li><b>Main</b> - Control vertical height of posts, create 'post previews'.</li>
+ <li><b>Profile</b> - Set hard limits to image upload size.</li>
+</ul>

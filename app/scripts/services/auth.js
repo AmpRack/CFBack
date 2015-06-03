@@ -1,25 +1,25 @@
 'use strict';
 
-// The Auth service handles transmitting user data to and from Firebase
-app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $firebase, $location) {
-	var ref = new Firebase(FIREBASE_URL);	// Access the firebase url
-	var auth = $firebaseSimpleLogin(ref);	// Access the firebase login service
+// The Auth service handles transmitting user (login) data to and from Firebase
+app.factory('Auth', function ($firebaseAuth, $firebaseObject, FIREBASE_URL, $rootScope, $location) {
+	var ref = new Firebase(FIREBASE_URL);
+	var auth = $firebaseAuth(ref);
 
 	var Auth = {
 		register: function (user) {
-			return auth.$createUser(user.email, user.password);
+			return auth.$createUser(user);
 		},
 
 		login: function (user) {
-			return auth.$login('password', user);
+			return auth.$authWithPassword(user);
 		},
 		
 		logout: function () {
-			auth.$logout();
+			auth.$unauth();
 		},
 		
 		resolveUser: function() {
-			return auth.$getCurrentUser();
+			return auth.$getAuth();
 		},
 	  
 		signedIn: function() {
@@ -31,30 +31,33 @@ app.factory('Auth', function ($firebaseSimpleLogin, FIREBASE_URL, $rootScope, $f
 			return auth.$sendPasswordResetEmail(email);
 		},
 
-		changePassword: function(creds) {
+		changePassword: function(userCreds) {
 			console.log('Changing password');
-			return auth.$changePassword(creds.email, creds.oldPass, creds.newPass);
+			return auth.$changePassword(userCreds);
 		},
 		
 		user: {}
 	};
 
-	// When we're logged in, do this stuff
-	$rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
-	  angular.copy(user, Auth.user);
-	  Auth.user.profile = $firebase(ref.child('profile').child(Auth.user.uid)).$asObject();
-	  console.log('Logged in');
-	});
+	// When a user has logged in successfully
+	auth.$onAuth(function(user) {
+  		if (user) { 
+  			$('#nav-master').css('display','block');
+  			angular.copy(user, Auth.user);
+	  		Auth.user.profile = $firebaseObject(ref.child('profile').child(user.uid));
+    		console.log('Logged in.');
 
-	// ..and when we log out, do this stuff
-	$rootScope.$on('$firebaseSimpleLogin:logout', function() {
-		if(Auth.user && Auth.user.profile) {
-	    	Auth.user.profile.$destroy();
-	  	}
-	  	angular.copy({}, Auth.user);
-		console.log('Logged out, redirecting to login');
-		$location.path('/');
-		$('#nav-master').css('display','none');
+  	// If a user is logged out...
+  		} else { 
+  			if(Auth.user && Auth.user.profile) {
+				Auth.user.profile.$destroy();
+			}
+
+		angular.copy({}, Auth.user);
+			$('#nav-master').css('display','none');
+			console.log('Redirecting to login');
+			$location.path('/');
+  		}
 	});
 
 	return Auth;

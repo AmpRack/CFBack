@@ -1,28 +1,59 @@
 'use strict';
 
-app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post, Profile, userPosts, imgur, Search) {
-  $scope.user = Auth.user;
+// The Profile controller handles user information, account settings
+app.controller('ProfileCtrl', function ($scope, $rootScope, $route, $routeParams, Auth, Post, Profile, imgur, Search) {
   var uid = $routeParams.userId;
-  $scope.posts = userPosts;
+  $scope.user = Auth.user;
+  $scope.posts = Post.getPostsBy('creatorUID', uid);
   $scope.search = Search;
 
-  // Attach profile data to individual posts
-  $scope.attachProfile = function(userId) {
-    return Profile.get(userId);
+
+  // When loading the posts to the page, get these ready
+  $scope.init = function(thisPost) {
+		$scope.attachProfile(thisPost);
+		return Post.scanPost(thisPost, uid);
+  };
+  
+
+  // When loading a post, get the poster's profile
+  $scope.attachProfile = function(thisPost) {
+    thisPost.profile = Profile.get(thisPost.creatorUID);
+    return thisPost;
   };
 
-  // Upload an image to imgur, return the link, then add it to the user's profile
-  $scope.uploadAvatar = function() {
-    var newAvatar = document.getElementById('newAvatar');
-    if (newAvatar.files[0]) {
-      imgur.upload(newAvatar.files[0]).then(function(model) {
-        var userAv = model.link;
-        return Profile.setAvatar(uid, userAv).then(function() {
-          $('#uploadAvatarModal').modal('hide');
-        });
-      });
-    }
+
+  // If a post has been highlighted (highlit?), add the post-notify class
+  $scope.checkHighlight = function(thisPost) {
+  	if (thisPost.highlight) {
+  		return 'post-notify';
+  	} else {
+  		return '';
+  	}
   };
+
+
+  // When viewing a post, load these things to the viewPost modal
+  $scope.loadPost = function(post) {
+    if ((post.creatorUID === $scope.user.uid) && (post.replies)) {
+      Post.markReplies(post);
+    }
+    $scope.viewPost = post;
+    $scope.attachProfile($scope.viewPost);
+  };
+
+  
+  // Delete an individual post
+  $scope.deletePost = function(post) {
+    Post.deletePost(post);
+    $route.reload();
+  };
+
+
+  // Send a user's profile to the profile modal
+  $scope.loadProfile = function(userId) {
+    $scope.viewProfile = Profile.get(userId);
+  };
+
 
   // Build the entire profile here, then send to Profile Service
   $scope.editProfile = function() {
@@ -31,54 +62,36 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
       about: $scope.user.profile.about,
       avatar: $scope.user.profile.avatar,
       postCount: $scope.user.profile.postCount,
-      replyCount: $scope.user.profile.replyCount,
       link: $scope.user.profile.link,
       linkTitle: $scope.user.profile.linkTitle
     };
 
-    return Profile.update(uid, template).then(function() {
-      $('#editProfileModal').modal('hide');
-    });
+    Profile.update(uid, template);
+    console.log($scope.posts);
+    $('#editProfileModal').modal('hide');
   };
 
-  // Delete an individual post
-  $scope.deletePost = function(postId) {
-    Post.deletePost(postId);
-    $route.reload();
+
+  // Upload an image to imgur, return the link, then add it to the user's profile
+  $scope.uploadAvatar = function() {
+    var newAvatar = document.getElementById('newAvatar');
+    if (newAvatar.files[0]) {
+      imgur.upload(newAvatar.files[0]).then(function(model) {
+        var userAv = model.link;
+        Profile.setAvatar(uid, userAv);
+        $('#uploadAvatarModal').modal('hide');
+      });
+    }
   };
 
-  // When viewing a post, get these things ready
-  $scope.loadReplies = function(post) {
-    $scope.viewPost = Post.getPost(post.$id);
-    $scope.replies = Post.getReplies(post.$id);
-    $scope.author = Profile.get(post.creatorUID);
-  };
-
-  // Build the reply here first, then send to Post Service
-  $scope.addReply = function(postId) {
-    var thisTime = timeStamp();
-    $scope.reply.postTime = thisTime[0];
-    $scope.reply.postDate = thisTime[1];
-    $scope.reply.creator = $scope.user.profile.username;
-    $scope.reply.creatorUID = $scope.user.uid;
-    $scope.reply.creatorAvatar = $scope.user.profile.avatar;
-    $scope.reply.parentId = postId;
-    $scope.reply.authorSeen = false;
-    
-    $('#viewPostModal').modal('hide');
-    Post.addReply($scope.reply, postId).then(function() {
-      $scope.reply = {content: ''};
-      $scope.viewPost = {};
-    });
-  };
 
   // Verify the new password is typed correct, then send to Auth service
   $scope.changePass = function() {
     if ($scope.newPass1 === $scope.newPass2) {
       var userCreds = {
         email: $scope.email,
-        oldPass: $scope.oldPass,
-        newPass: $scope.newPass2
+        oldPassword: $scope.oldPass,
+        newPassword: $scope.newPass2
       };
 
       $('#changePassModal').modal('hide');
@@ -87,9 +100,32 @@ app.controller('ProfileCtrl', function ($scope, $route, $routeParams, Auth, Post
         console.log('Password change complete');
       });
     } else {
-      // Error handling goes here!
+      // Additional error handling goes here.
     }
-
   };
 
+
+  // Build the reply here before sending it to the Post Service
+  $scope.addReply = function(postId) {
+    var thisTime = timeStamp();
+    $scope.reply.postTime = thisTime[0];
+    $scope.reply.postDate = thisTime[1];
+    $scope.reply.creatorUID = $scope.user.uid;
+    $scope.reply.authorSeen = false;
+    
+    $('#viewPostModal').modal('toggle');
+    return Post.addReply(postId, $scope.reply).then(function(){
+      $scope.resetForm();
+    });
+  };
+
+
+  // When closing modals, reset the local $route
+  $scope.resetForm = function() {
+    $('body').css('padding-right', '0px');
+    $('body').removeClass('modal-open');
+    $scope.post = { title: '', keyword: '', content: '' };
+    $scope.reply = { content: '' };
+    $route.reload();
+  };
 });	

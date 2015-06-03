@@ -166,17 +166,24 @@ input.ng-dirty.ng-valid {
   display: none;
 }
 #nav-searchbar  {
-  padding: 5px;
-  margin: 15px 15px 0 15px; 
+  padding: 5px 10px;
+  margin: 15px 0 0 15px; 
   border: 1px solid #ccc;
   border-radius: 20px !important;
 }
   #nav-searchbar input {
     padding-left: 5px;
   }
+
+.fa-search {
+  position: relative;
+  left: -30px;
+}
+
 #reply-alert {
-  padding-left: 0;
-  padding-right: 0;
+  margin: 15px 10px;
+  padding: 5px 10px;
+  
 }
 
 .navbar {
@@ -339,32 +346,40 @@ div.alert > span {
 .post-main > ul > li {
   border: 0;
 }
-.post-main > ul > li > a {
-	color: #D2D7D3;
-}
-.post-main > ul > li > a:hover {
-	color: #D2D7D3;
-	opacity: 0.5;
-}
-
-.view-post {
-    color: #D2D7D3;
-    padding: 14px 16px;
-}
-
-.post-main > ul > li > a > span.badge {
-	background-color: #D2D7D3;
-}
-.post-main > ul > li > a > span.badge:hover {
-	color: rgba(4, 147, 114, 1.0);
-	background-color: transparent;
-}
 .post-main > .list-group > .list-group-item {
-  margin: 15px 0;
+  margin: 0;
   padding: 0;
   text-align: center;
 }
-
+.post-main > ul > li > button {
+  margin-top: 17px;
+  background-color: transparent;
+  border: 1px solid #999999;
+  border-radius: 28px;
+  font-size: 18px;
+  color: #999999;
+}
+.post-main > ul > li > button:hover {
+  cursor: pointer;
+  color: rgba(4, 147, 114, 1.0);
+  border: 1px solid rgba(4, 147, 114, 1.0);
+}
+.post-notify {
+  border: 3px solid rgba(4, 147, 114, 1.0); 
+  box-shadow: 0 1px 1px rgba(135, 198, 183, 1.0);
+}
+.reply-count {
+  margin: 5px 0 0 0;
+}
+.delete-post {
+  margin: 0 0 0 15px;
+  font-size: 12px;
+  color: #888888;
+}
+.delete-post:hover {
+  color: #ff0000;
+  opacity: 1.0;
+}
 .delete-post:hover,
 .show-reply:hover, 
 .create-reply:hover {

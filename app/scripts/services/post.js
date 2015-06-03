@@ -1,10 +1,10 @@
 'use strict';
 
-// Transfers post information to and from firebase
-app.factory('Post', function ($firebase, FIREBASE_URL) {
+// Transfers post and replies to and from firebase
+app.factory('Post', function ($routeParams, $rootScope, $firebaseArray, $firebaseObject, FIREBASE_URL) {
 	var ref = new Firebase(FIREBASE_URL);
-	var posts = $firebase(ref.child('posts')).$asArray();
-  var replyRef = $firebase(ref.child('replies'));
+	var posts = $firebaseArray(ref.child('posts'));
+
 
   var Post = {
     all: posts,
@@ -13,43 +13,32 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
     addPost: function (post) {
       console.log('Adding post...');
       return posts.$add(post).then(function(){
-        return $firebase(ref.child('profile').child(post.creatorUID)).$asObject().$loaded().then(function(thisUser) {
-          thisUser.postCount += 1;
-          return thisUser.$save();
+        return $firebaseObject(ref.child('profile').child(post.creatorUID)).$loaded().then(function(thisUser) {
+          var increment = { postCount: thisUser.postCount + 1 };
+          return ref.child('profile').child(post.creatorUID).update(increment);
         });
       });
     },
 
-    // Add the reply to firebase first, then increment the replyCount for the post and user.
-    addReply: function (reply) {
+    // Add the reply to firebase
+    addReply: function (postId, reply) {
       console.log('Adding reply...');
-      return $firebase(ref.child('replies').child(reply.parentId)).$push(reply).then(function(){
-        return $firebase(ref.child('posts').child(reply.parentId)).$asObject().$loaded().then(function(thisPost) {
-          thisPost.replyCount += 1;
-          //return thisPost.$save();
-        }).then(function() {
-          return $firebase(ref.child('profile').child(reply.creatorUID)).$asObject().$loaded().then(function(thisUser) {
-            thisUser.replyCount += 1;
-            return thisUser.$save();
-          });
-        });
-      });
+      return $firebaseArray(ref.child('posts').child(postId).child('replies')).$add(reply);
     },
-
-    // It would be easy to decrement user.postCount, but I dunno about user.replyCount...
-    deletePost: function (postId) {
+    
+    // Remove post from firebase, and decrement user.postCount
+    deletePost: function (post) {
       console.log('Deleting post...');
-      return $firebase(ref.child('posts')).$remove(postId).then(function(){
-        if ($firebase(ref.child('replies').child(postId))) {
-          console.log('Deleting replies...');
-          return $firebase(ref.child('replies')).$remove(postId);
-        }
+      return $firebaseObject(ref.child('profile').child(post.creatorUID)).$loaded().then(function(thisUser) {
+        var decrement = { postCount: thisUser.postCount - 1 };
+        ref.child('profile').child(post.creatorUID).update(decrement);
+        return ref.child('posts').child(post.$id).remove();
       });
     },
 
     // Get one specific post
     getPost: function (postId) {
-      return $firebase(ref.child('posts').child(postId)).$asObject();
+      return $firebaseObject(ref.child('posts').child(postId));
     },
 
     // Get posts that match a given key/value pair
@@ -60,44 +49,42 @@ app.factory('Post', function ($firebase, FIREBASE_URL) {
           output.push(posts[i]);
         }
       }
+      console.log('Posts for ' + key + '/' + value + ' found!');
       return output;
     },
 
-    // Load replies for a given post
-    getReplies: function (postId) {
-      return $firebase(ref.child('replies').child(postId)).$asArray();
+    // When viewing our own post, mark all attached replies as 'seen'
+    markReplies: function(post) {
+      var postId = post.$id;
+      var replies = post.replies;
+      for (var reply in replies) {
+        replies[reply].authorSeen = true;
+        delete replies[reply].profile;
+      }
+      return ref.child('posts').child(postId).child('replies').update(replies);
     },
 
-    // Count the number of replies for a given post, but disabled/broken
-    replyCount: function (postId) {
-      return $firebase(ref.child('replies').child(postId)).$asArray().$loaded().then(function(replies){
-        return replies.length;
-      });
-      
-    },
-    
-    // Get each post, break the content and title into an array, then check each word against the searchTerm
-    searchPosts: function(searchTerm) {
-      return $firebase(ref.child('posts')).$asArray().$loaded().then(function(posts){
-        var output = [];
-        for (var i = 0; i < posts.length; i++) {
-          var matchFound = false;
-          var content = posts[i].content.split('');
-          content.push(posts[i].title.split(''));
-          for (var j = 0; j < content.length; j++) {
-            if (!matchFound) { 
-              if (content[j].toLowerCase() === searchTerm.toLowerCase()) {
-                matchFound = true;
-                output.push(posts[i]);
-              }
+    // Get a reply count, and detect any unread replies
+    scanPost: function(thisPost, userId) {
+      thisPost.replyCount = 0;
+      if (thisPost.replies) {
+        for (var reply in thisPost.replies) {
+          thisPost.replyCount++;
+          var thisReply = thisPost.replies[reply];
+          if ((thisReply.authorSeen === false) && (thisReply.creatorUID !== thisPost.creatorUID)) {
+            if (userId === thisPost.creatorUID) {
+              $rootScope.newReplies = true;
+              thisPost.highlight = true;
+            } else {
+              thisPost.highlight = false;
             }
           }
         }
-        return output; 
-      });
+      }
+      return thisPost;
     }
-
   };
+
 	return Post;
 });
 

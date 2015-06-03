@@ -62,10 +62,9 @@ var app = angular
           user: function(Auth) {
             return Auth.resolveUser();
           },
-          userPosts: function(Auth, Profile) {
-            return Auth.resolveUser().then(function(user){
-              return Profile.userPosts(user.uid);
-            });
+          userPosts: function(Profile, Auth) {
+            var user = Auth.resolveUser();
+            return Profile.userPosts(user.uid);
           }
         }
       })

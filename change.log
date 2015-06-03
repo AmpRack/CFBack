@@ -1,3 +1,35 @@
+== 6-03-15 ==
++ Comment notifier complete, fully functional.
+! Merged 'fb-update' branch to master.
++ Search function integrated.
++ Post windows widened, to fill out the page better
+! Fixed bug regarding disappearing usernames.
+~ Various style bugfixes and cleanup. All previously mentioned style changes have been addressed.
+
+
+== 5-28-15 ==
++ Comment notifier is FINALLY starting to work properly. Prototype button detects new replies, and links them to the profile page.
+> Overall, the whole thing needs a styling facelift. The alert button needs a dismissal button (that marks all unread replies as read), the reply counter and the view-post button need to be more user-friendly. Posts with new replies should have a bright border around them on the profile page, amongst all of their posts. This will be in the second update.
+
+
+== 5-25-15 ==
++ Replies are now properly trackable. Users are notified whenever a user leaves the reply to any of the user's posts.
+- While all the information is being tracked properly, the button itself needs to be plugged in (route to profile, change $scope.posts)
++ Profile controller and view updated to more closely match the main controller/view. 
++ Bug Fixes: Modals now close properly (no resizing or refreshing needed to force a fix)
+~ While most bugs regarding $scope data loss have been fixed, there is one small edge case: Viewing your own post, then NOT clicking the close button leads to disappearing profile info. Again, it's not permanently lost, just removed from scope.
++ Updated some bower/package settings, and finally removed the Firebase Simple Login modules.
+! A lot of post sorting functions need to be changed into filters, but they all work fine for now.
+
+
+== 5-14-15 ==
++ Firebase update integration is complete. Everything is re-hooked up and working.
++ Post service update! Replies are now stored as part of the post object. Cuts down on queries and bandwidth.
++ Reply counts and post counts all work properly.
+~ Libraries.rar reduced to node_modules.rar. All other files/folders moved to Github as-is.
+- New bug: When leaving a reply, author.username disappears from other, previous replies in the same post. Any further changes to the $scope or $route fix it.
+
+
 == 5-02-15 ==
 ! New branch 'fb-update' created.
 ! Firebase has been updated from 1.6.3 to 2.2.4. AngularFire updated from 0.8.2 to 1.0.0.
@@ -8,7 +40,7 @@
 == 4-29-15 ==
 + Libraries updated to include imgur api settings and new app name (Conclave)
 + Lots of code cleanup from the last update
-+ Bugfixes to profile controller
+
 
 == 4-28-15 ==
 + Post service now refers to user profiles for info, instead of attaching it to every post.

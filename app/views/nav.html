@@ -5,15 +5,15 @@
       <!-- mobile navbar stylings begin -->
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
       <span class="sr-only">Toggle navigation</span>
-      <a id="#reply-alert">
-        <div class="alert alert-info alert-dismissible visible-xs-inline" role="alert">
-          <span>0</span>
-        </div>
-      </a>           
+      
+      <a ng-show="alertButton()" class="alert alert-info alert-dismissible" role="alert" id="reply-alert" ng-click="dismissAlert()" ng-href="#/users/{{ user.uid }}">
+        <span>You have new replies!</span>
+      </a>  
+      
       <img ng-src="{{ user.profile.avatar }}" class="navbar-img avatar">
       </button>
       <!-- mobile navbar stylings end -->   
-      <a class="navbar-brand" href="#/">
+      <a class="navbar-brand" ng-href="#/">
         <img src="images/conclave-logo.png" class="navbar-img" />
       </a>
     </div>
@@ -22,17 +22,15 @@
       <ul class="nav navbar-nav navbar-right">
         <!-- Use jquery to toggle searchbar open/close -->
         <li>
-          <form id="nav-searchbar" class="input-prepend">
-            <input ng-model="search.searchPosts" class="span2" type="text" placeholder="Search">
+          <form class="input-prepend">
+            <input id="nav-searchbar" ng-model="search.searchPosts" class="span2" type="text" placeholder="Search">
             <button class="add-on" type="submit" ><i class="fa fa-search"></i></button>
           </form>
         </li>
         <!-- Info alert for new comments toggle hidden class to dismiss -->
-        <li class="hidden-xs" ng-show="hasReplies()">
-          <a id="reply-alert">
-            <div class="alert alert-info alert-dismissible" role="alert">
-              <span>You have unread replies!</span><a id="close-notification"href="#">x</a>
-            </div>
+        <li class="hidden-xs" ng-show="alertButton()">
+          <a class="alert alert-info alert-dismissible" role="alert" id="reply-alert" ng-click="dismissAlert()" ng-href="#/users/{{ user.uid }}">
+              <span>You have new replies!</span>
           </a>                
         </li>
 

@@ -1,44 +1,8 @@
 'use strict';
 
-// Format raw time units to ##:## ##/##/##
-function scrubTime(unit) {
-  // For years, we only need the last 2 digits
-  if (unit > 2000) {
-    unit -= 2000;
-  }
-  if (unit < 10) {
-    unit = ('0' + unit.toString());
-  }
-  return unit.toString();
-}
 
-// Returns date and time as separate, semantic strings
-function timeStamp() {
-  var currentTime = new Date();
-  var hrs  = currentTime.getHours();
-  var mins = scrubTime(currentTime.getMinutes());
-  var day  = scrubTime(currentTime.getDate());
-  var mon  = scrubTime(currentTime.getMonth() + 1);
-  var year = scrubTime(currentTime.getFullYear());
-  var ampm = '';
-  // Use hrs to find the meridian (am/pm) before scrubbing
-  if (hrs === 0) {
-    hrs = '12';
-    ampm = 'AM';
-  } else if (hrs > 12) {
-    hrs = scrubTime(hrs - 12);
-    ampm = 'PM';
-  } else {
-    hrs = scrubTime(hrs);
-    ampm = 'AM';
-  }
-  var postTime = hrs + ':' + mins + ampm;
-  var postDate = mon + '/' + day + '/' + year;
-  return [postTime, postDate];
-}
-
-// PostsCtrl handles posts, replies, and helps link profile data to posts.
-app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile, Search) {
+// PostsCtrl handles viewing the main page; specifically loading posts properly
+app.controller('PostsCtrl', function ($scope, $route, $rootScope, Post, Auth, Profile, Search) {
   $scope.user = Auth.user;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
@@ -46,7 +10,8 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile, Searc
   $scope.post = { title: '', keyword: '', content: '' };
   $scope.reply = { content: '' };
   $scope.search = Search;
-  
+
+
   // Necessary to sort posts from newest to oldest
   $scope.reverse = function(array) {
     var copy = [].concat(array);
@@ -54,22 +19,42 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile, Searc
   };
 
 
-
-  // Send a user's profile to the profile modal
-  $scope.loadProfile = function(user) {
-    $scope.viewProfile = user;
+  // During ng-repeat(post), get this info ready
+  $scope.init = function(thisPost) {
+    $scope.attachProfile(thisPost);
+    return Post.scanPost(thisPost, $scope.user.uid);
   };
 
+
+  // When viewing a post, get this info ready for the modal
+  $scope.loadPost = function(post) {
+    if ((post.creatorUID === $scope.user.uid) && (post.replies)) {
+      Post.markReplies(post);
+    }
+    $scope.viewPost = post;
+    $scope.attachProfile($scope.viewPost);
+  };
+
+
+  // Send a user's profile data to the profile modal
+  $scope.loadProfile = function(userId) {
+    $scope.viewProfile = Profile.get(userId);
+  };
+
+
+  // When loading a post, add the user's profile data directly to the post
+  $scope.attachProfile = function(thisPost) {
+    thisPost.profile = Profile.get(thisPost.creatorUID);
+    return thisPost;
+  };
+
+
   // Fetch posts that match a given key/value pair
+  // NOTE: This should be made into a filter!
   $scope.getPosts = function(key, value) {
     $scope.posts = Post.getPostsBy(key, value);
   };
 
-  $scope.initPost = function(post) {
-    post.thisUser = Profile.get(post.creatorUID);
-    post.thisReplyCount = Post.replyCount(post.$id);
-//    return post;
-  };
   
   // Build the post here, then send the object to the Post Service
   $scope.submitPost = function() {
@@ -77,24 +62,18 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile, Searc
     $scope.post.postTime = thisTime[0];
     $scope.post.postDate = thisTime[1];
     $scope.post.creatorUID = $scope.user.uid;
-    $scope.post.replyCount = 0;
-    $scope.post.keyword = 'Debug'; /* Testing purposes only!
+
     if ($('#post-label option:selected').val() === 'Label') {
       $scope.post.keyword = 'Misc';
     } else {
       $scope.post.keyword = $('#post-label option:selected').val();
-    }*/
-    Post.addPost($scope.post).then(function () {
-      $('#newPostModal').modal('hide');
+    }
+
+    Post.addPost($scope.post).then(function() {
+      $('#newPostModal').modal('toggle');
     });
   };
 
-  // When viewing a post, load these things
-  $scope.loadReplies = function(post) {
-    $scope.viewPost = post;
-    $scope.replies = Post.getReplies(post.$id);
-    $scope.author = Profile.get(post.creatorUID);
-  };
 
   // Build the reply here before sending it to the Post Service
   $scope.addReply = function(postId) {
@@ -102,17 +81,22 @@ app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile, Searc
     $scope.reply.postTime = thisTime[0];
     $scope.reply.postDate = thisTime[1];
     $scope.reply.creatorUID = $scope.user.uid;
-    $scope.reply.parentId = postId;
     $scope.reply.authorSeen = false;
     
-    Post.addReply($scope.reply, postId).then(function() {
-      $scope.reply = {content: ''};
+    $('#viewPostModal').modal('toggle');
+    return Post.addReply(postId, $scope.reply).then(function(){
+      $scope.resetForm();
     });
   };
 
+
   // Reset form data after submission
   $scope.resetForm = function() {
+    $('body').css('padding-right', '0px');  // The modals don't account for scrollbar width properly...?
+    $('body').removeClass('modal-open');    // ... probably related to this. It's not closing properly?
     $scope.post = { title: '', keyword: '', content: '' };
     $scope.reply = { content: '' };
+    $route.reload();
   };
+
 });

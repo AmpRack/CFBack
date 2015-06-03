@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AuthCtrl', function ($scope, $location, Auth, user, Profile) {
+app.controller('AuthCtrl', function ($scope, $rootScope, $location, Auth, user, Profile) {
 	// If we're loggedin, just go to the main page
 	if (user) {
 		$location.path('/main');
@@ -9,6 +9,8 @@ app.controller('AuthCtrl', function ($scope, $location, Auth, user, Profile) {
 	// Send user login info to firebase for verification
 	$scope.login = function() {
 		Auth.login($scope.user).then(function (){
+			$rootScope.newReplies = false; 
+			$rootScope.ignoreAlert = false;
 			$location.path('/main');
 		}, function (error) {
 			$scope.error = error.toString();

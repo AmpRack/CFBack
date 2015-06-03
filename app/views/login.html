@@ -64,22 +64,22 @@
 <!-- Reset Password Modal End -->
 
 <!-- Register New Account Modal --> 
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true" > 
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true"> 
   <div class="modal-dialog"> 
-    <form name="regForm"class="modal-content" ng-submit="regForm.$valid && register()" novalidate> 
+    <form name="regForm" class="modal-content" ng-submit="regForm.$valid && register()" novalidate> 
       <div class="modal-header"> 
         <h4 class="modal-title" id="registerModalLabel">Register New Account</h4> 
       </div> 
 
       <div class="modal-body">
         <p id="error" ng-show="error" class="text-danger">{{ error }}</p>
-        <input type="email" ng-model="user.email" placeholder="Email" class="form-control" required/><br/>
-        <input type="text" ng-model="user.username" placeholder="Username" class="form-control" required/><br>
-        <input type="password" ng-model="user.password" placeholder="Password" class="form-control" required/><br/>
+        <input type="email" ng-model="user.email" placeholder="Email" class="form-control" required /><br/>
+        <input type="text" ng-model="user.username" placeholder="Username" class="form-control" required /><br>
+        <input type="password" ng-model="user.password" placeholder="Password" class="form-control" required /><br/>
       </div> 
       
       <div class="modal-footer"> 
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> 
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
         <button type="submit" class="btn btn-primary">Register</button> 
       </div> 
     </form> 

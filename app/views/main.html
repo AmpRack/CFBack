@@ -6,32 +6,32 @@
 
     <!-- Button link for new post -->
     <div class="row text-center">
-      <div class="col-md-6 col-md-offset-3 background-white new-post-button-section">
+      <div class="col-md-8 col-md-offset-2 background-white new-post-button-section">
         <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#newPostModal">New Post</button> 
       </div>
     </div>
 
 
     <!-- Individual Post Template -->
-    <div class="post-template" ng-repeat="post in reverse(posts) | filter: search.searchPosts" ng-init="initPost(post)">
+    <div class="post-template" ng-repeat="post in reverse(posts) | filter: search.searchPosts" ng-init="init(post)">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3 background-white post-main">
-          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="loadProfile(post.thisUser)">
-            <img ng-src="{{ post.thisUser.avatar }}" class="post-avatar" />
+        <div class="col-md-8 col-md-offset-2 background-white post-main">
+          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="loadProfile(post.creatorUID)">
+            <img ng-src="{{ post.profile.avatar }}" class="post-avatar" />
           </a>
-          <ul class="list-group">
-            <li class="list-group-item"style="margin:0 0 15px 0;">
-              <i class="view-post fa fa-plus" data-toggle="modal" data-target="#viewPostModal" ng-click="loadReplies(post)"></i>
-            </li>
-            <li class="list-group-item"style="color:#D2D7D3">
-              <p>{{ post.thisReplyCount }}</p> <!-- Testing Purposes Only! -->
+          <ul class="list-group" ng-init="getReplyCount(post)">
+            <li class="list-group-item">
+              <button class=".btn-viewpost" ng-click="loadPost(post)" data-toggle="modal" data-controls-modal="#viewPostModal" data-backdrop="static" data-keyboard="false" data-target="#viewPostModal">
+                <p class="reply-count">{{ post.replyCount }}</p>
+                <span class="fa fa-chevron-down"></span>
+              </button>
             </li>
           </ul>
 
           <h5>
             <span class="post-title">{{ post.title }}</span><br />
             <span class="timestamp">
-              <a ng-click="getPosts('creatorUID', post.creatorUID)">{{ post.thisUser.username }}</a> - 
+              <a ng-click="getPosts('creatorUID', post.creatorUID)">{{ post.profile.username }}</a> - 
               <a ng-click="getPosts('postDate', post.postDate)">{{ post.postTime }} {{ post.postDate }}</a> - 
               <a ng-click="getPosts('keyword', post.keyword)">{{ post.keyword }}</a>
             </span>
@@ -53,7 +53,7 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-xs-8">
-                <input type="text" class="form-control" placeholder="Title" ng-model="post.title">
+                <input type="text" class="form-control" placeholder="Title" ng-model="post.title" required/>
               </div>
               <div class="col-xs-4">
                 <select id="post-label" class="form-control"> 
@@ -81,10 +81,10 @@
       <div class="modal-dialog"> 
       	<div class="modal-content">
 		      <div class="modal-header"> 
-		      	<img ng-src="{{ author.avatar }}" />
+		      	<img ng-src="{{ viewPost.profile.avatar }}" />
 		        <h4 class="modal-title" id="viewPostModalLabel">{{ viewPost.title }}</h4>
 		        <h4>
-              <span class="timestamp">{{ author.username }} - 
+              <span class="timestamp">{{ viewPost.profile.username }} - 
                 {{ viewPost.postTime }} {{ viewPost.postDate }} - 
                 {{ viewPost.keyword }}
               </span>
@@ -96,12 +96,12 @@
 		        	<h4>{{ viewPost.content }}</h4>
 		        </div>
 
-		        <div class="post-template" ng-repeat="reply in replies" ng-init="initPost(reply)">
+		        <div class="post-template" ng-repeat="reply in (viewPost.replies)" ng-init="attachProfile(reply)">
 		        	<div class="row">
 		        		<div class="background-white post-main">
-                  <img ng-src="{{ reply.thisUser.avatar }}" /> 
+                  <img ng-src="{{ reply.profile.avatar }}" /> 
 				          <h5><span class="timestamp">
-              			{{ reply.thisUser.username }} - 
+              			{{ reply.profile.username }} - 
               			{{ reply.postTime }} {{ reply.postDate }}
             			</span></h5>
           				<p>{{ reply.content }}</p>
@@ -134,12 +134,6 @@
             <dl class="dl-horizontal">
               <dt>Posts</dt>
               <dd><span class="badge">{{ viewProfile.postCount }}</span></dd>
-            </dl>
-
-            <!-- Show user replies -->
-            <dl class="dl-horizontal">
-              <dt>Replies</dt>
-              <dd><span class="badge">{{ viewProfile.replyCount }}</span></dd>
             </dl>
           </div>
         </div>
