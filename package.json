@@ -1,7 +1,10 @@
 {
   "name": "Conclave",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.12.4",
+    "gzippo": "^0.2.0"
+  },
   "repository": {},
   "devDependencies": {
     "grunt": "^0.4.5",
