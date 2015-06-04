@@ -1,0 +1,152 @@
+<script>$('#nav-master').css('display','block');</script> <!-- Turn the nav on! -->
+
+<div ng-controller="PostsCtrl">
+  <div ng-show="signedIn()" class="main-body-background">
+  <div class="container-fluid content-section">
+
+    <!-- Button link for new post -->
+    <div class="row text-center">
+      <div class="col-md-8 col-md-offset-2 background-white new-post-button-section">
+        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#newPostModal">New Post</button> 
+      </div>
+    </div>
+
+
+    <!-- Individual Post Template -->
+    <div class="post-template" ng-repeat="post in reverse(posts) | filter: search.searchPosts" ng-init="init(post)">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2 background-white post-main">
+          <a data-toggle="modal" data-target="#viewProfileModal" ng-click="loadProfile(post.creatorUID)">
+            <img ng-src="{{ post.profile.avatar }}" class="post-avatar" />
+          </a>
+          <ul class="list-group" ng-init="getReplyCount(post)">
+            <li class="list-group-item">
+              <button class=".btn-viewpost" ng-click="loadPost(post)" data-toggle="modal" data-controls-modal="#viewPostModal" data-backdrop="static" data-keyboard="false" data-target="#viewPostModal">
+                <p class="reply-count">{{ post.replyCount }}</p>
+                <span class="fa fa-chevron-down"></span>
+              </button>
+            </li>
+          </ul>
+
+          <h5>
+            <span class="post-title">{{ post.title }}</span><br />
+            <span class="timestamp">
+              <a ng-click="getPosts('creatorUID', post.creatorUID)">{{ post.profile.username }}</a> - 
+              <a ng-click="getPosts('postDate', post.postDate)">{{ post.postTime }} {{ post.postDate }}</a> - 
+              <a ng-click="getPosts('keyword', post.keyword)">{{ post.keyword }}</a>
+            </span>
+          </h5>
+          <p>{{ post.content }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Individual Post Template End -->
+
+
+    <!-- Add New Post Modal --> 
+    <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true"> 
+      <div class="modal-dialog"> 
+        <form class="modal-content" ng-submit="submitPost()" ng-show="signedIn()"> 
+          <div class="modal-header"> 
+            <h4 class="modal-title" id="newPostModalLabel">New Post</h4> 
+          </div> 
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-8">
+                <input type="text" class="form-control" placeholder="Title" ng-model="post.title" required/>
+              </div>
+              <div class="col-xs-4">
+                <select id="post-label" class="form-control"> 
+                  <option selected disabled>Label</option>
+                  <option>Projects</option>
+                  <option>Tutorials</option> 
+                  <option>Fun</option> 
+                  <option>Misc</option> 
+                </select>
+              </div>
+            </div> 
+            <textarea class="form-control" rows="3" placeholder="Post" ng-model="post.content" required></textarea> 
+          </div> 
+          <div class="modal-footer"> 
+            <button type="button" ng-click="resetForm()" class="btn btn-default" data-dismiss="modal">Cancel</button> 
+            <button type="submit" class="btn btn-primary">Post</button> 
+          </div> 
+        </form> 
+      </div> 
+    </div>
+    <!-- Add New Post Modal End -->
+
+    <!-- View Post Modal -->
+		<div class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="viewPostModalLabel" aria-hidden="true"> 
+      <div class="modal-dialog"> 
+      	<div class="modal-content">
+		      <div class="modal-header"> 
+		      	<img ng-src="{{ viewPost.profile.avatar }}" />
+		        <h4 class="modal-title" id="viewPostModalLabel">{{ viewPost.title }}</h4>
+		        <h4>
+              <span class="timestamp">{{ viewPost.profile.username }} - 
+                {{ viewPost.postTime }} {{ viewPost.postDate }} - 
+                {{ viewPost.keyword }}
+              </span>
+		        </h4>
+		      </div> 
+
+		      <div class="modal-body">
+		      	<div class="post-content">
+		        	<h4>{{ viewPost.content }}</h4>
+		        </div>
+
+		        <div class="post-template" ng-repeat="reply in (viewPost.replies)" ng-init="attachProfile(reply)">
+		        	<div class="row">
+		        		<div class="background-white post-main">
+                  <img ng-src="{{ reply.profile.avatar }}" /> 
+				          <h5><span class="timestamp">
+              			{{ reply.profile.username }} - 
+              			{{ reply.postTime }} {{ reply.postDate }}
+            			</span></h5>
+          				<p>{{ reply.content }}</p>
+								</div>
+		        	</div>
+		        </div>
+		      </div> 
+
+		      <form class="modal-footer" ng-submit="addReply(viewPost.$id)"> 
+	      		<textarea class="form-control" rows="3" placeholder="Reply" ng-model="reply.content"></textarea> 
+		          <button type="button" id="cancel-reply" ng-click="resetForm()" class="btn btn-default" data-dismiss="modal">Close</button>
+		          <button type="submit" class="btn btn-primary">Post</button> 
+		      </form>
+	      </div>
+      </div> 
+    </div>
+    <!-- View Post Modal End-->
+
+    <!-- View Profile Modal -->
+    <div class="modal fade" id="viewProfileModal" tabindex="-1" role="dialog" aria-labelledby="viewProfileModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"> 
+          <div class="modal-body text-center"> 
+            <img ng-src="{{ viewProfile.avatar }}" />
+            <h1><span>{{ viewProfile.username }}</span></h1>
+            <a ng-href="{{ viewProfile.link }}" target="_blank" >{{ viewProfile.linkTitle }}</a>
+            <p>{{ viewProfile.about }}</p>
+
+            <!-- Show user posts -->
+            <dl class="dl-horizontal">
+              <dt>Posts</dt>
+              <dd><span class="badge">{{ viewProfile.postCount }}</span></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View Profile Modal End -->
+
+    <!-- Button link for more posts ##### Disabled, since there aren't more posts to load
+    <div class="row text-center">
+      <div class="col-md-6 col-md-offset-3 background-white more-post-button-section">
+        <button type="button" class="btn btn-default btn-lg btn-block">More Posts</button> 
+      </div>
+    </div>
+  <!-- End Main Content container -->
+  </div>
+</div> 
