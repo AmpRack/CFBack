@@ -52,6 +52,10 @@ var app = angular
         resolve: {
           user: function(Auth) {
             return Auth.resolveUser();
+          },
+          watchList: function(Auth, Post){
+            var user = Auth.resolveUser();
+            return Post.getWatchList(user.uid);
           }
         }
       })

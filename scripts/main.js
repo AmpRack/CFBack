@@ -70,3 +70,7 @@ function timeStamp() {
   return [postTime, postDate];
 }
 
+function isNumber(input) {
+     return (input >=0 || input < 0);
+}
+

@@ -16,7 +16,8 @@ app.factory('Profile', function (Post, $rootScope, $firebaseObject, $firebaseArr
 				link: 'http://www.codifyacademy.com/',
 				linkTitle: 'Codify Academy Homepage',
 				uid: user.uid,
-				username: user.username
+				username: user.username,
+				watching: { Dummy: 0 }
 			};
 			console.log('New user ' + user.username + ' created!');	
 			return profileRef.child(userId).set(newProfile);

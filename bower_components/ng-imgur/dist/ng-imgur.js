@@ -27,7 +27,7 @@
          * @constant API_KEY
          * @type {String}
          */
-        API_KEY: ''
+        API_KEY: 'Client-ID 6dbde8111eb9074'
 
     });
 

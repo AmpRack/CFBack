@@ -8,10 +8,11 @@ app.controller('AuthCtrl', function ($scope, $rootScope, $location, Auth, user, 
 
 	// Send user login info to firebase for verification
 	$scope.login = function() {
-		Auth.login($scope.user).then(function (){
-			$rootScope.newReplies = false; 
+		Auth.login($scope.user).then(function (userData){
+			$rootScope.newReplies = 0; 
 			$rootScope.ignoreAlert = false;
 			$location.path('/main');
+			$scope.user.profile = Profile.get(userData.uid);
 		}, function (error) {
 			$scope.error = error.toString();
 		});

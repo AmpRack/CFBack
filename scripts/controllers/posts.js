@@ -2,7 +2,7 @@
 
 
 // PostsCtrl handles viewing the main page; specifically loading posts properly
-app.controller('PostsCtrl', function ($scope, $route, $rootScope, Post, Auth, Profile, Search) {
+app.controller('PostsCtrl', function ($scope, $route, Post, Auth, Profile, Search) {
   $scope.user = Auth.user;
   $scope.signedIn = Auth.signedIn;
   $scope.logout = Auth.logout;
@@ -22,17 +22,28 @@ app.controller('PostsCtrl', function ($scope, $route, $rootScope, Post, Auth, Pr
   // During ng-repeat(post), get this info ready
   $scope.init = function(thisPost) {
     $scope.attachProfile(thisPost);
-    return Post.scanPost(thisPost, $scope.user.uid);
+    var watchList = $scope.user.profile.watching;
+    return Post.scanPost(thisPost, watchList);
   };
 
 
   // When viewing a post, get this info ready for the modal
   $scope.loadPost = function(post) {
-    if ((post.creatorUID === $scope.user.uid) && (post.replies)) {
-      Post.markReplies(post);
+    if (post.replies) {
+      Post.markReplies(post, $scope.user.uid);
     }
     $scope.viewPost = post;
     $scope.attachProfile($scope.viewPost);
+  };
+
+
+  // If a post has new replies, this marks it 
+  $scope.checkHighlight = function(thisPost) {
+    if (thisPost.highlight) {
+      return 'post-notify';
+    } else {
+      return '';
+    }
   };
 
 
@@ -71,12 +82,13 @@ app.controller('PostsCtrl', function ($scope, $route, $rootScope, Post, Auth, Pr
 
     Post.addPost($scope.post).then(function() {
       $('#newPostModal').modal('toggle');
+      $scope.resetForm();
     });
   };
 
 
   // Build the reply here before sending it to the Post Service
-  $scope.addReply = function(postId) {
+  $scope.addReply = function(post) {
     var thisTime = timeStamp();
     $scope.reply.postTime = thisTime[0];
     $scope.reply.postDate = thisTime[1];
@@ -84,7 +96,7 @@ app.controller('PostsCtrl', function ($scope, $route, $rootScope, Post, Auth, Pr
     $scope.reply.authorSeen = false;
     
     $('#viewPostModal').modal('toggle');
-    return Post.addReply(postId, $scope.reply).then(function(){
+    return Post.addReply(post, $scope.reply).then(function(){
       $scope.resetForm();
     });
   };
@@ -96,7 +108,6 @@ app.controller('PostsCtrl', function ($scope, $route, $rootScope, Post, Auth, Pr
     $('body').removeClass('modal-open');    // ... probably related to this. It's not closing properly?
     $scope.post = { title: '', keyword: '', content: '' };
     $scope.reply = { content: '' };
-    $route.reload();
   };
 
 });

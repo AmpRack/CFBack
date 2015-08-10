@@ -15,7 +15,7 @@
     <!-- Individual Post Template -->
     <div class="post-template" ng-repeat="post in reverse(posts) | filter: search.searchPosts" ng-init="init(post)">
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 background-white post-main">
+        <div class="col-md-8 col-md-offset-2 background-white post-main" ng-class="checkHighlight(post)">
           <a data-toggle="modal" data-target="#viewProfileModal" ng-click="loadProfile(post.creatorUID)">
             <img ng-src="{{ post.profile.avatar }}" class="post-avatar" />
           </a>
@@ -110,7 +110,7 @@
 		        </div>
 		      </div> 
 
-		      <form class="modal-footer" ng-submit="addReply(viewPost.$id)"> 
+		      <form class="modal-footer" ng-submit="addReply(viewPost)"> 
 	      		<textarea class="form-control" rows="3" placeholder="Reply" ng-model="reply.content"></textarea> 
 		          <button type="button" id="cancel-reply" ng-click="resetForm()" class="btn btn-default" data-dismiss="modal">Close</button>
 		          <button type="submit" class="btn btn-primary">Post</button> 
