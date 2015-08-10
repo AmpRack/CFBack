@@ -19,7 +19,7 @@ var app = angular
     'ngImgur'  , 'firebase'
   ])
 
-  .constant('FIREBASE_URL', 'https://burning-heat-6468.firebaseio.com/')
+  .constant('FIREBASE_URL', '')   // Looks like 'https://burning-heat-####.firebaseio.com/'
 
   .directive('ngPlaceholder', function() { // Allows for ng-placeholder="{{ stuff.likeThis }}"
     return {
